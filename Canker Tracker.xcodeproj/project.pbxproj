@@ -13,6 +13,7 @@
 		E9291D342B8EF2790001FD88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D332B8EF2790001FD88 /* Assets.xcassets */; };
 		E9291D372B8EF2790001FD88 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */; };
 		E9291D3E2B8EF3AF0001FD88 /* CankerLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9291D3D2B8EF3AF0001FD88 /* CankerLogView.swift */; };
+		E9D5D87A2B8F14A80099AB25 /* VisualSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		E9291D332B8EF2790001FD88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E9291D3D2B8EF3AF0001FD88 /* CankerLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerLogView.swift; sourceTree = "<group>"; };
+		E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualSelectorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				E9291D2F2B8EF2780001FD88 /* ContentView.swift */,
 				E9291D3D2B8EF3AF0001FD88 /* CankerLogView.swift */,
+				E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -152,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9291D3E2B8EF3AF0001FD88 /* CankerLogView.swift in Sources */,
+				E9D5D87A2B8F14A80099AB25 /* VisualSelectorView.swift in Sources */,
 				E9291D302B8EF2780001FD88 /* ContentView.swift in Sources */,
 				E9291D322B8EF2780001FD88 /* Item.swift in Sources */,
 				E9291D2E2B8EF2780001FD88 /* Canker_TrackerApp.swift in Sources */,

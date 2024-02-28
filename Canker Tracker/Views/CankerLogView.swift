@@ -18,17 +18,16 @@ struct MouthDiagramView: View {
             Text("Tap on the diagram to select a location.")
             Text("Selected Location: \(selectedLocation)")
             
-            Image("mouthDiagram") // Your actual image asset name
+            Image("mouthDiagram")
                 .resizable()
                 .scaledToFit()
-                .frame(width: diagramWidth, height: diagramHeight) // Set this to the size you want
-                .contentShape(Rectangle()) // This makes the entire area tappable, not just the image's non-transparent parts
+                .frame(width: diagramWidth, height: diagramHeight)
+                .contentShape(Rectangle())
                 .gesture(
                     DragGesture(minimumDistance: 0)
                         .onEnded { value in
-                            // Get the location of the tap
                             let location = value.location
-                            // Use location to determine which part of the image was tapped
+
                             selectLocation(at: location)
                         }
                 )
@@ -39,7 +38,6 @@ struct MouthDiagramView: View {
 
         print(location)
         
-        // Placeholder logic to select a location
         if location.x < diagramWidth * 0.33 {
             if location.y < diagramHeight * 0.33 {
                 selectedLocation = "Upper Gums"
