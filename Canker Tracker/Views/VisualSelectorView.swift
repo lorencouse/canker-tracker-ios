@@ -8,20 +8,23 @@
 import Foundation
 import SwiftUI
 
-struct visualSelector: View {
+struct VisualSelectorView: View {
     let imageName: String
     @State private var selectedLocation: CGPoint? = nil
-    @State private var diagramWidth: CGFloat = 350 // Adjust as needed
-    @State private var diagramHeight: CGFloat = 350 // Adjust as needed
+    @State private var diagramWidth: CGFloat = 350
+    @State private var diagramHeight: CGFloat = 350
+    @State private var soreSize: CGFloat = 10
     
     var body: some View {
+        
+        
         VStack {
-            Text("Tap on the diagram to select a location.")
-            if let selectedLocation = selectedLocation {
-                Text("Selected Location: \(selectedLocation.debugDescription)")
-            } else {
-                Text("Selected Location: None")
-            }
+            Spacer()
+            
+            Text("Tap on image to select sore location")
+            
+            
+            Spacer()
             
             GeometryReader { geometry in
                 ZStack(alignment: .topLeading) {
@@ -36,24 +39,46 @@ struct visualSelector: View {
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onEnded { value in
-                                    // Calculate the tap location within the image
                                     let location = value.location
-                                    // Adjust location based on image scaling and position
                                     self.selectedLocation = CGPoint(x: location.x, y: location.y)
                                 }
                         )
                     
                     if let selectedLocation = selectedLocation {
                         Circle()
-                            .fill(Color.green)
-                            .frame(width: 10, height: 10) // Dot size
-                            .offset(x: selectedLocation.x - 10, y: selectedLocation.y - 10) // Center the dot
+                            .fill(Color.white)
+                            .stroke(Color.black, lineWidth: 1)
+                            .frame(width: soreSize, height: soreSize)
+                            .offset(x: selectedLocation.x - (soreSize/2), y: selectedLocation.y - (soreSize/2))
                     }
                 }
             }
-            .frame(width: diagramWidth, height: diagramHeight) // Specify the frame for GeometryReader
+            .frame(width: diagramWidth, height: diagramHeight)
+            
+            
+            Text("Sore Size: \(Int(soreSize)) mm")
+            Slider(value: $soreSize, in: 1...30, step: 1)
+                .padding()
+            if selectedLocation == nil {
+                
+                GreyedOutButton()
+                
+            }
+            else {
+                
+                NavigationButton(destination: CankerLocationView(), label: "Next")
+                
+            }
+            
         }
     }
+    
+    
+    
+}
+
+#Preview {
+    VisualSelectorView(imageName: "Cheek")
 }
 
 

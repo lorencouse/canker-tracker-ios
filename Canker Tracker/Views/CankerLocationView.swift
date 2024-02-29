@@ -1,23 +1,24 @@
 import Foundation
 import SwiftUI
 
-struct CankerLogView: View {
+struct CankerLocationView: View {
     var body: some View {
         MouthDiagramView()
     }
 }
 
 struct MouthDiagramView: View {
-    let locations = ["Roof", "Tongue Top", "Under Tongue", "Left Cheek", "Right Cheek", "Upper Gums", "Lower Gums", "Upper Lip", "Lower Lip"]
+    let locations = ["roofOfMouth", "Tongue", "underTongue", "cheek", "cheek", "gums", "gums", "lips", "lips"]
     let diagramHeight: CGFloat = 350
     let diagramWidth: CGFloat = 350
     @State private var selectedLocation: String = "None"
     
     var body: some View {
         VStack {
-            Text("Tap on the diagram to select a location.")
-            Text("Selected Location: \(selectedLocation)")
+            Spacer()
             
+            Text("\(selectedLocation == "None" ? "Tap on the diagram to select a location." : "Selected Location: \(selectedLocation)")")
+            Spacer()
             Image("mouthDiagram")
                 .resizable()
                 .scaledToFit()
@@ -27,47 +28,55 @@ struct MouthDiagramView: View {
                     DragGesture(minimumDistance: 0)
                         .onEnded { value in
                             let location = value.location
-
+                            
                             selectLocation(at: location)
                         }
                 )
+            
+            Spacer()
+            
+            NavigationButton(destination: VisualSelectorView(imageName: selectedLocation), label: "Next")
         }
+        
+        
+        
+        
     }
     
     func selectLocation(at location: CGPoint) {
-
+        
         print(location)
         
         if location.x < diagramWidth * 0.33 {
             if location.y < diagramHeight * 0.33 {
-                selectedLocation = "Upper Gums"
+                selectedLocation = "gums"
             } else if location.y < diagramHeight * 0.66 {
-                selectedLocation = "Left Cheek"
+                selectedLocation = "cheek"
             } else {
-                selectedLocation = "Lower Gums"
+                selectedLocation = "gums"
             }
         } else if location.x < diagramWidth * 0.66 {
             if location.y < diagramHeight * 0.25 {
-                selectedLocation = "Upper Lip"
+                selectedLocation = "lips"
             } else if location.y < diagramHeight * 0.5 {
-                selectedLocation = "Roof"
+                selectedLocation = "topOfMouth"
             }else if location.y < diagramHeight * 0.75 {
-                selectedLocation = "Tongue Top"
+                selectedLocation = "tongue"
             } else {
-                selectedLocation = "Lower Lip"
+                selectedLocation = "lips"
             }
         } else {
             if location.y < diagramHeight * 0.33 {
-                selectedLocation = "Right Cheek"
+                selectedLocation = "cheek"
             } else if location.y < diagramHeight * 0.66 {
-                selectedLocation = "Right Cheek"
+                selectedLocation = "cheek"
             } else {
-                selectedLocation = "Under Tongue"
+                selectedLocation = "underTongue"
             }
         }
     }
 }
 #Preview {
-    CankerLogView()
+    CankerLocationView()
 }
 

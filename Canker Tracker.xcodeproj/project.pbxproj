@@ -12,7 +12,9 @@
 		E9291D322B8EF2780001FD88 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9291D312B8EF2780001FD88 /* Item.swift */; };
 		E9291D342B8EF2790001FD88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D332B8EF2790001FD88 /* Assets.xcassets */; };
 		E9291D372B8EF2790001FD88 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */; };
-		E9291D3E2B8EF3AF0001FD88 /* CankerLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9291D3D2B8EF3AF0001FD88 /* CankerLogView.swift */; };
+		E9291D3E2B8EF3AF0001FD88 /* CankerLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9291D3D2B8EF3AF0001FD88 /* CankerLocationView.swift */; };
+		E970A17F2B9038B5000313E2 /* CankerSoreCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970A17E2B9038B5000313E2 /* CankerSoreCountView.swift */; };
+		E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970A1812B903F06000313E2 /* NavigationButton.swift */; };
 		E9D5D87A2B8F14A80099AB25 /* VisualSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +25,9 @@
 		E9291D312B8EF2780001FD88 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E9291D332B8EF2790001FD88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E9291D3D2B8EF3AF0001FD88 /* CankerLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerLogView.swift; sourceTree = "<group>"; };
+		E9291D3D2B8EF3AF0001FD88 /* CankerLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerLocationView.swift; sourceTree = "<group>"; };
+		E970A17E2B9038B5000313E2 /* CankerSoreCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerSoreCountView.swift; sourceTree = "<group>"; };
+		E970A1812B903F06000313E2 /* NavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
 		E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualSelectorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +61,7 @@
 		E9291D2C2B8EF2780001FD88 /* Canker Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				E970A1802B903EED000313E2 /* Components */,
 				E9291D3F2B8EF3BD0001FD88 /* Views */,
 				E9291D2D2B8EF2780001FD88 /* Canker_TrackerApp.swift */,
 				E9291D312B8EF2780001FD88 /* Item.swift */,
@@ -77,11 +82,28 @@
 		E9291D3F2B8EF3BD0001FD88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E970A17D2B9037B4000313E2 /* surveyView */,
 				E9291D2F2B8EF2780001FD88 /* ContentView.swift */,
-				E9291D3D2B8EF3AF0001FD88 /* CankerLogView.swift */,
+				E9291D3D2B8EF3AF0001FD88 /* CankerLocationView.swift */,
 				E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E970A17D2B9037B4000313E2 /* surveyView */ = {
+			isa = PBXGroup;
+			children = (
+				E970A17E2B9038B5000313E2 /* CankerSoreCountView.swift */,
+			);
+			path = surveyView;
+			sourceTree = "<group>";
+		};
+		E970A1802B903EED000313E2 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E970A1812B903F06000313E2 /* NavigationButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,7 +176,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9291D3E2B8EF3AF0001FD88 /* CankerLogView.swift in Sources */,
+				E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */,
+				E970A17F2B9038B5000313E2 /* CankerSoreCountView.swift in Sources */,
+				E9291D3E2B8EF3AF0001FD88 /* CankerLocationView.swift in Sources */,
 				E9D5D87A2B8F14A80099AB25 /* VisualSelectorView.swift in Sources */,
 				E9291D302B8EF2780001FD88 /* ContentView.swift in Sources */,
 				E9291D322B8EF2780001FD88 /* Item.swift in Sources */,

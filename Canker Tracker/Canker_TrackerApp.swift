@@ -25,7 +25,7 @@ struct Canker_TrackerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CankerSoreCountView()
         }
         .modelContainer(sharedModelContainer)
     }
