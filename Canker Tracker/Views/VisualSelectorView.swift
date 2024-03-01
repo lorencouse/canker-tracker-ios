@@ -13,7 +13,24 @@ struct VisualSelectorView: View {
     @State private var selectedLocation: CGPoint? = nil
     @State private var diagramWidth: CGFloat = 350
     @State private var diagramHeight: CGFloat = 350
-    @State private var soreSize: CGFloat = 10
+    @State private var soreSize: CGFloat = 3
+    @State private var painScore: CGFloat = 3
+    let painScaleColors: [Color] = [
+        Color.pain0,
+        Color.pain1,
+        Color.pain2,
+        Color.pain3,
+        Color.pain4,
+        Color.pain5,
+        Color.pain6,
+        Color.pain7,
+        Color.pain8,
+        Color.pain9,
+        Color.pain10
+
+    ]
+
+
     
     var body: some View {
         
@@ -46,10 +63,10 @@ struct VisualSelectorView: View {
                     
                     if let selectedLocation = selectedLocation {
                         Circle()
-                            .fill(Color.white)
+                            .fill(painScaleColors[Int(painScore)])
                             .stroke(Color.black, lineWidth: 1)
-                            .frame(width: soreSize, height: soreSize)
-                            .offset(x: selectedLocation.x - (soreSize/2), y: selectedLocation.y - (soreSize/2))
+                            .frame(width: soreSize*2, height: soreSize*2)
+                            .offset(x: selectedLocation.x - (soreSize), y: selectedLocation.y - (soreSize))
                     }
                 }
             }
@@ -57,8 +74,13 @@ struct VisualSelectorView: View {
             
             
             Text("Sore Size: \(Int(soreSize)) mm")
-            Slider(value: $soreSize, in: 1...30, step: 1)
+            Slider(value: $soreSize, in: 1...20, step: 1)
                 .padding()
+            
+            Text("Pain Score: \(Int(painScore))")
+            Slider(value: $painScore, in: 0...10, step: 1)
+                .padding()
+            
             if selectedLocation == nil {
                 
                 GreyedOutButton()
@@ -66,7 +88,7 @@ struct VisualSelectorView: View {
             }
             else {
                 
-                NavigationButton(destination: CankerLocationView(), label: "Next")
+                NavigationButton(destination: MouthDiagramView(), label: "Next")
                 
             }
             

@@ -19,8 +19,10 @@ struct CankerSoreCountView: View {
             
             
             VStack {
+                Spacer()
                 Text("How many cankersores do you have today?")
                     .padding()
+                Spacer()
                 Picker("Number of canker sores", selection: $cankerCount) {
                     ForEach(0..<20) {
                         Text("\($0) sores")
@@ -34,7 +36,7 @@ struct CankerSoreCountView: View {
                 }
                 
                 else {
-                    NavigationButton(destination: CankerLocationView(), label: "Next")
+                    NavigationButton(destination: MouthDiagramView(), label: "Next")
                 }
                 
                 

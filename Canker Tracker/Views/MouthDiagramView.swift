@@ -1,11 +1,6 @@
 import Foundation
 import SwiftUI
 
-struct CankerLocationView: View {
-    var body: some View {
-        MouthDiagramView()
-    }
-}
 
 struct MouthDiagramView: View {
     let locations = ["roofOfMouth", "Tongue", "underTongue", "cheek", "cheek", "gums", "gums", "lips", "lips"]
@@ -35,7 +30,14 @@ struct MouthDiagramView: View {
             
             Spacer()
             
-            NavigationButton(destination: VisualSelectorView(imageName: selectedLocation), label: "Next")
+            if selectedLocation == "None" {
+                GreyedOutButton()
+            }
+            else {
+                NavigationButton(destination: VisualSelectorView(imageName: selectedLocation), label: "Next")
+            }
+            
+
         }
         
         
@@ -48,35 +50,27 @@ struct MouthDiagramView: View {
         print(location)
         
         if location.x < diagramWidth * 0.33 {
-            if location.y < diagramHeight * 0.33 {
-                selectedLocation = "gums"
-            } else if location.y < diagramHeight * 0.66 {
-                selectedLocation = "cheek"
+            if location.y < diagramHeight * 0.5 {
+                selectedLocation = "leftCheek"
             } else {
-                selectedLocation = "gums"
+                selectedLocation = "lips"
             }
         } else if location.x < diagramWidth * 0.66 {
-            if location.y < diagramHeight * 0.25 {
-                selectedLocation = "lips"
-            } else if location.y < diagramHeight * 0.5 {
-                selectedLocation = "topOfMouth"
-            }else if location.y < diagramHeight * 0.75 {
-                selectedLocation = "tongue"
+            if location.y < diagramHeight * 0.5 {
+                selectedLocation = "upperGums"
             } else {
-                selectedLocation = "lips"
+                selectedLocation = "tongue"
             }
         } else {
-            if location.y < diagramHeight * 0.33 {
-                selectedLocation = "cheek"
-            } else if location.y < diagramHeight * 0.66 {
-                selectedLocation = "cheek"
+            if location.y < diagramHeight * 0.5 {
+                selectedLocation = "rightCheek"
             } else {
-                selectedLocation = "underTongue"
+                selectedLocation = "lowerGums"
             }
         }
     }
 }
 #Preview {
-    CankerLocationView()
+    MouthDiagramView()
 }
 
