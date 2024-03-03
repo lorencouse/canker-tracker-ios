@@ -12,35 +12,24 @@ struct SoreLocationView: View {
     let imageName: String
     @State var addMoreSores: Bool = false
     @State var finishedAdding: Bool = false
-    @State private var selectedLocation: CGPoint? = nil
-    @State private var diagramWidth: CGFloat = 350
-    @State private var diagramHeight: CGFloat = 350
-    @State private var soreSize: CGFloat = 3
-    @State private var painScore: CGFloat = 3
-    let painScaleColors: [Color] = [
-        Color.pain0,
-        Color.pain1,
-        Color.pain2,
-        Color.pain3,
-        Color.pain4,
-        Color.pain5,
-        Color.pain6,
-        Color.pain7,
-        Color.pain8,
-        Color.pain9,
-        Color.pain10
-    ]
-    
+    @State private var selectedLocationX: Double? = nil
+    @State private var selectedLocationY: Double? = nil
+    @State private var diagramWidth: Double = Constants.diagramWidth
+    @State private var diagramHeight: Double = Constants.diagramHeight
+    @State private var soreSize: Double = 3
+    @State private var painScore: Double = 3
+
     var body: some View {
         
         VStack {
             Spacer()
-            
-            Text("Tap on image to select sore location")
-            
-            
+
+            Text("Tap Sore Location")
+                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                .multilineTextAlignment(.center)
+
             Spacer()
-            
+
             GeometryReader { geometry in
                 ZStack(alignment: .topLeading) {
                     Image(imageName)
@@ -48,80 +37,76 @@ struct SoreLocationView: View {
                         .scaledToFit()
                         .frame(width: diagramWidth, height: diagramHeight)
                         .contentShape(Rectangle())
-                    
+                        .edgesIgnoringSafeArea(.all)
+
                     Color.clear
                         .contentShape(Rectangle())
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onEnded { value in
-                                    let location = value.location
-                                    self.selectedLocation = CGPoint(x: location.x, y: location.y)
+                                    self.selectedLocationX = Double(value.location.x)
+                                    self.selectedLocationY = Double(value.location.y)
                                 }
                         )
                     
-                    if let selectedLocation = selectedLocation {
+                    if let x = selectedLocationX, let y = selectedLocationY {
                         Circle()
-                            .fill(painScaleColors[Int(painScore)])
+                            .fill(Constants.painScaleColors[Int(painScore)])
                             .stroke(Color.black, lineWidth: 1)
-                            .frame(width: soreSize*2, height: soreSize*2)
-                            .offset(x: selectedLocation.x - (soreSize), y: selectedLocation.y - (soreSize))
+                            .frame(width: soreSize * 2, height: soreSize * 2)
+                            .offset(x: x - soreSize, y: y - soreSize)
                     }
                 }
             }
             .frame(width: diagramWidth, height: diagramHeight)
-            
-            
+
             Text("Sore Size: \(Int(soreSize)) mm")
             Slider(value: $soreSize, in: 1...20, step: 1)
                 .padding()
-                .disabled(selectedLocation == nil)
-            
+                .disabled(selectedLocationX == nil || selectedLocationY == nil)
+
             Text("Pain Score: \(Int(painScore))")
             Slider(value: $painScore, in: 0...10, step: 1)
                 .padding()
-                .disabled(selectedLocation == nil)
-            
+                .disabled(selectedLocationX == nil || selectedLocationY == nil)
+
             HStack {
                 CustomButton(buttonLabel: "Finish") {
                     saveCankerSore()
                     finishedAdding = true
                 }
-                    .disabled(selectedLocation == nil)
-                
+                .disabled(selectedLocationX == nil || selectedLocationY == nil)
+
                 CustomButton(buttonLabel: "Add More") {
                     saveCankerSore()
                     addMoreSores = true
                 }
-                .disabled(selectedLocation == nil)
-                
+                .disabled(selectedLocationX == nil || selectedLocationY == nil)
             }
-            
-            NavigationLink(destination: MouthDiagramView(), isActive: $addMoreSores) { EmptyView() }
-            
-            NavigationLink(destination: SoreHistoryView(), isActive: $finishedAdding) { EmptyView() }
 
+            NavigationLink(destination: MouthDiagramView(), isActive: $addMoreSores) { EmptyView() }
+            NavigationLink(destination: SoreHistoryView(), isActive: $finishedAdding) { EmptyView() }
         }
     }
-    
-    private func saveCankerSore() {
-        let newCankerSore = CankerSore(
-//                        id: Self.ID,
-            startDate: Date(), heeled: false,
-            numberOfDays: 1,
-            location: imageName,
-            size: [soreSize],
-            painLevel: [painScore],
-            coordinates: selectedLocation!
-        )
-        AppDataManager.shared.saveCankerSoreData(newCankerSore)
-    }
-    
-    
-    
-}
 
+    private func saveCankerSore() {
+        if let x = selectedLocationX, let y = selectedLocationY {
+            let newCankerSore = CankerSore(
+                lastUpdated: [Date()],
+                numberOfDays: 1,
+                healed: false,
+                location: imageName,
+                size: [soreSize],
+                painLevel: [painScore],
+                xCoordinate: x,
+                yCoordinate: y
+            )
+            AppDataManager.shared.saveCankerSoreData(newCankerSore)
+        }
+    }
+}
 #Preview {
-    SoreLocationView( imageName: "Cheek")
+    SoreLocationView( imageName: "leftCheek")
 }
 
 

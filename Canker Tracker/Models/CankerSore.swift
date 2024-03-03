@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import CoreGraphics
 
-struct CankerSore: Decodable, Encodable {
-//    let id: UUID
-    let startDate: Date
-    let heeled: Bool
+struct CankerSore: Codable, Hashable {
+    let lastUpdated: [Date]
     let numberOfDays: Int
+    let healed: Bool
     let location: String
-    let size: [CGFloat]
-    let painLevel: [CGFloat]
-    let coordinates: CGPoint
+    let size: [Double]
+    let painLevel: [Double]
+    let xCoordinate: Double
+    let yCoordinate: Double
 }

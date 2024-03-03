@@ -3,9 +3,8 @@ import SwiftUI
 
 
 struct MouthDiagramView: View {
-    let locations = ["roofOfMouth", "Tongue", "underTongue", "cheek", "cheek", "gums", "gums", "lips", "lips"]
-    let diagramHeight: CGFloat = 350
-    let diagramWidth: CGFloat = 350
+    let diagramHeight: CGFloat = Constants.diagramHeight
+    let diagramWidth: CGFloat = Constants.diagramWidth
     @State private var selectedLocation: String = "none"
     @State private var locationIsSelected: Bool = false
     
@@ -15,6 +14,7 @@ struct MouthDiagramView: View {
                 Spacer()
                 
                 Text("Select Canker Sore Location")
+                    .font(.title)
 
                 Spacer()
                 Image("mouthDiagram") 
@@ -22,6 +22,7 @@ struct MouthDiagramView: View {
                     .scaledToFit()
                     .frame(width: diagramWidth, height: diagramHeight)
                     .contentShape(Rectangle())
+                    .edgesIgnoringSafeArea(.all)
                     .gesture(
                         DragGesture(minimumDistance: 0)
                             .onEnded { value in

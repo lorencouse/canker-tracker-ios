@@ -10,11 +10,15 @@ import Foundation
 class AppDataManager {
     static let shared = AppDataManager()
     
-    func saveCankerSoreData(_ CankerSore: CankerSore) {
+    func saveCankerSoreData(_ cankerSore: CankerSore) {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(CankerSore) {
-            if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                let filePath = documentDirectory.appendingPathComponent("cankerSoreData.json")
+        if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let filePath = documentDirectory.appendingPathComponent(Constants.soreDataFileName)
+            
+            var soresHistory: [CankerSore] = AppDataManager.loadFile(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
+            soresHistory.append(cankerSore)
+            
+            if let encoded = try? encoder.encode(soresHistory) {
                 try? encoded.write(to: filePath)
             }
         }
