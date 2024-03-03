@@ -28,18 +28,19 @@ struct NavigationButton<Destination: View>: View {
     }
 }
 
-struct GreyedOutButton: View {
+struct CustomButton: View {
+    let buttonLabel: String
+    let action: () -> Void
     var body: some View {
-        VStack {
-            Button("Select Location") {}
-                .frame(maxWidth: .infinity)
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.gray)
-                .cornerRadius(10)
-        }
+        Button(action: action) {
+                Text(buttonLabel)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            }
         .padding()
-        
     }
 }
 

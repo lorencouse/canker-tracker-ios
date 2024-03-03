@@ -8,8 +8,10 @@
 import Foundation
 import SwiftUI
 
-struct VisualSelectorView: View {
+struct SoreLocationView: View {
     let imageName: String
+    @State var addMoreSores: Bool = false
+    @State var finishedAdding: Bool = false
     @State private var selectedLocation: CGPoint? = nil
     @State private var diagramWidth: CGFloat = 350
     @State private var diagramHeight: CGFloat = 350
@@ -27,13 +29,9 @@ struct VisualSelectorView: View {
         Color.pain8,
         Color.pain9,
         Color.pain10
-
     ]
-
-
     
     var body: some View {
-        
         
         VStack {
             Spacer()
@@ -76,23 +74,46 @@ struct VisualSelectorView: View {
             Text("Sore Size: \(Int(soreSize)) mm")
             Slider(value: $soreSize, in: 1...20, step: 1)
                 .padding()
+                .disabled(selectedLocation == nil)
             
             Text("Pain Score: \(Int(painScore))")
             Slider(value: $painScore, in: 0...10, step: 1)
                 .padding()
+                .disabled(selectedLocation == nil)
             
-            if selectedLocation == nil {
+            HStack {
+                CustomButton(buttonLabel: "Finish") {
+                    saveCankerSore()
+                    finishedAdding = true
+                }
+                    .disabled(selectedLocation == nil)
                 
-                GreyedOutButton()
+                CustomButton(buttonLabel: "Add More") {
+                    saveCankerSore()
+                    addMoreSores = true
+                }
+                .disabled(selectedLocation == nil)
                 
             }
-            else {
-                
-                NavigationButton(destination: MouthDiagramView(), label: "Next")
-                
-            }
             
+            NavigationLink(destination: MouthDiagramView(), isActive: $addMoreSores) { EmptyView() }
+            
+            NavigationLink(destination: SoreHistoryView(), isActive: $finishedAdding) { EmptyView() }
+
         }
+    }
+    
+    private func saveCankerSore() {
+        let newCankerSore = CankerSore(
+//                        id: Self.ID,
+            startDate: Date(), heeled: false,
+            numberOfDays: 1,
+            location: imageName,
+            size: [soreSize],
+            painLevel: [painScore],
+            coordinates: selectedLocation!
+        )
+        AppDataManager.shared.saveCankerSoreData(newCankerSore)
     }
     
     
@@ -100,7 +121,7 @@ struct VisualSelectorView: View {
 }
 
 #Preview {
-    VisualSelectorView(imageName: "Cheek")
+    SoreLocationView( imageName: "Cheek")
 }
 
 

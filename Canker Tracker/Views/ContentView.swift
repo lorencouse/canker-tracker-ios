@@ -11,7 +11,7 @@ import SwiftData
 struct ContentView: View {
     
     var body: some View {
-        VisualSelectorView(imageName: "lips")
+        SoreLocationView(imageName: "lips")
     }
     
 }

@@ -13,9 +13,11 @@
 		E9291D342B8EF2790001FD88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D332B8EF2790001FD88 /* Assets.xcassets */; };
 		E9291D372B8EF2790001FD88 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */; };
 		E9291D3E2B8EF3AF0001FD88 /* MouthDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9291D3D2B8EF3AF0001FD88 /* MouthDiagramView.swift */; };
-		E970A17F2B9038B5000313E2 /* CankerSoreCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970A17E2B9038B5000313E2 /* CankerSoreCountView.swift */; };
+		E94856622B934791001C32F1 /* CankerSore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94856612B934791001C32F1 /* CankerSore.swift */; };
+		E94856652B934DA2001C32F1 /* AppDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94856642B934DA2001C32F1 /* AppDataManager.swift */; };
 		E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970A1812B903F06000313E2 /* NavigationButton.swift */; };
-		E9D5D87A2B8F14A80099AB25 /* VisualSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */; };
+		E99A09A02B94393000557E24 /* SoreHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A099F2B94393000557E24 /* SoreHistoryView.swift */; };
+		E9D5D87A2B8F14A80099AB25 /* SoreLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D5D8792B8F14A80099AB25 /* SoreLocationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,9 +28,11 @@
 		E9291D332B8EF2790001FD88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E9291D3D2B8EF3AF0001FD88 /* MouthDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouthDiagramView.swift; sourceTree = "<group>"; };
-		E970A17E2B9038B5000313E2 /* CankerSoreCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerSoreCountView.swift; sourceTree = "<group>"; };
+		E94856612B934791001C32F1 /* CankerSore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerSore.swift; sourceTree = "<group>"; };
+		E94856642B934DA2001C32F1 /* AppDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDataManager.swift; sourceTree = "<group>"; };
 		E970A1812B903F06000313E2 /* NavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
-		E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualSelectorView.swift; sourceTree = "<group>"; };
+		E99A099F2B94393000557E24 /* SoreHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreHistoryView.swift; sourceTree = "<group>"; };
+		E9D5D8792B8F14A80099AB25 /* SoreLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreLocationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,8 @@
 		E9291D2C2B8EF2780001FD88 /* Canker Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				E94856632B934D94001C32F1 /* Utilites */,
+				E94856602B93477D001C32F1 /* Models */,
 				E970A1802B903EED000313E2 /* Components */,
 				E9291D3F2B8EF3BD0001FD88 /* Views */,
 				E9291D2D2B8EF2780001FD88 /* Canker_TrackerApp.swift */,
@@ -82,18 +88,34 @@
 		E9291D3F2B8EF3BD0001FD88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E970A17D2B9037B4000313E2 /* surveyView */,
 				E9291D2F2B8EF2780001FD88 /* ContentView.swift */,
-				E9291D3D2B8EF3AF0001FD88 /* MouthDiagramView.swift */,
-				E9D5D8792B8F14A80099AB25 /* VisualSelectorView.swift */,
+				E99A099F2B94393000557E24 /* SoreHistoryView.swift */,
+				E970A17D2B9037B4000313E2 /* surveyView */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E94856602B93477D001C32F1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E94856612B934791001C32F1 /* CankerSore.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E94856632B934D94001C32F1 /* Utilites */ = {
+			isa = PBXGroup;
+			children = (
+				E94856642B934DA2001C32F1 /* AppDataManager.swift */,
+			);
+			path = Utilites;
 			sourceTree = "<group>";
 		};
 		E970A17D2B9037B4000313E2 /* surveyView */ = {
 			isa = PBXGroup;
 			children = (
-				E970A17E2B9038B5000313E2 /* CankerSoreCountView.swift */,
+				E9291D3D2B8EF3AF0001FD88 /* MouthDiagramView.swift */,
+				E9D5D8792B8F14A80099AB25 /* SoreLocationView.swift */,
 			);
 			path = surveyView;
 			sourceTree = "<group>";
@@ -176,13 +198,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E99A09A02B94393000557E24 /* SoreHistoryView.swift in Sources */,
+				E94856622B934791001C32F1 /* CankerSore.swift in Sources */,
 				E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */,
-				E970A17F2B9038B5000313E2 /* CankerSoreCountView.swift in Sources */,
 				E9291D3E2B8EF3AF0001FD88 /* MouthDiagramView.swift in Sources */,
-				E9D5D87A2B8F14A80099AB25 /* VisualSelectorView.swift in Sources */,
+				E9D5D87A2B8F14A80099AB25 /* SoreLocationView.swift in Sources */,
 				E9291D302B8EF2780001FD88 /* ContentView.swift in Sources */,
 				E9291D322B8EF2780001FD88 /* Item.swift in Sources */,
 				E9291D2E2B8EF2780001FD88 /* Canker_TrackerApp.swift in Sources */,
+				E94856652B934DA2001C32F1 /* AppDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
