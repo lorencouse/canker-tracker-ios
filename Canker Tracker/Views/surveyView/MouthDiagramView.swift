@@ -45,7 +45,7 @@ struct MouthDiagramView: View {
             if location.y < diagramHeight * 0.5 {
                 selectedLocation = "leftCheek"
             } else {
-                selectedLocation = "lips"
+                selectedLocation = "mouthDiagram"
             }
         } else if location.x < diagramWidth * 0.66 {
             if location.y < diagramHeight * 0.5 {
@@ -53,6 +53,8 @@ struct MouthDiagramView: View {
             } else {
                 selectedLocation = "tongue"
             }
+        
+            
         } else {
             if location.y < diagramHeight * 0.5 {
                 selectedLocation = "rightCheek"

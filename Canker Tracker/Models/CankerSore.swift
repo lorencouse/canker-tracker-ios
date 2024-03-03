@@ -15,6 +15,15 @@ struct CankerSore: Codable, Hashable {
     let location: String
     let size: [Double]
     let painLevel: [Double]
+    let xCoordinateZoomed: Double
+    let yCoordinateZoomed: Double
     let xCoordinate: Double
     let yCoordinate: Double
+}
+
+struct ImageScale {
+    var scaleX: Double
+    var scaleY: Double
+    var xOffset: Double
+    var yOffset: Double
 }

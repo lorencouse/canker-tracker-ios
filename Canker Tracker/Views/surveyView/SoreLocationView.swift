@@ -27,6 +27,7 @@ struct SoreLocationView: View {
             Text("Tap Sore Location")
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 .multilineTextAlignment(.center)
+            Text("X:\(selectedLocationX ?? 0) Y:\(selectedLocationY ?? 0) ")
 
             Spacer()
 
@@ -88,9 +89,25 @@ struct SoreLocationView: View {
             NavigationLink(destination: SoreHistoryView(), isActive: $finishedAdding) { EmptyView() }
         }
     }
+    
+
 
     private func saveCankerSore() {
+        
+        let imageScale = Constants.imageScaleValues
         if let x = selectedLocationX, let y = selectedLocationY {
+            
+            let xZoomed = (x * imageScale[imageName]!.scaleX) + imageScale[imageName]!.xOffset
+            let yZoomed = (y * imageScale[imageName]!.scaleY) + imageScale[imageName]!.yOffset
+            
+//            let sx: Double = 0.476
+//            let ox: Double = 102.33
+//            let sy: Double = 0.308
+//            let oy: Double = 171.5
+//        
+//            let xCoordinateFull = sx * x + ox
+//            let yCoordinateFull = sy * y + oy
+            
             let newCankerSore = CankerSore(
                 lastUpdated: [Date()],
                 numberOfDays: 1,
@@ -98,8 +115,10 @@ struct SoreLocationView: View {
                 location: imageName,
                 size: [soreSize],
                 painLevel: [painScore],
-                xCoordinate: x,
-                yCoordinate: y
+                xCoordinateZoomed: x,
+                yCoordinateZoomed: y,
+                xCoordinate: xZoomed,
+                yCoordinate: yZoomed
             )
             AppDataManager.shared.saveCankerSoreData(newCankerSore)
         }
