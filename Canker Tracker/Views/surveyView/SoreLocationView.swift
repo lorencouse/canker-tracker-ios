@@ -12,6 +12,7 @@ struct SoreLocationView: View {
     let imageName: String
     @State var addMoreSores: Bool = false
     @State var finishedAdding: Bool = false
+    @State var isEditing: Bool = false
     @State private var selectedLocationX: Double? = nil
     @State private var selectedLocationY: Double? = nil
     @State private var diagramWidth: Double = Constants.diagramWidth
@@ -22,14 +23,13 @@ struct SoreLocationView: View {
     var body: some View {
         
         VStack {
-            Spacer()
 
-            Text("Tap Sore Location")
+            Text("\(Constants.imageScaleValues[imageName]?.viewName ?? "")")
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 .multilineTextAlignment(.center)
-            Text("X:\(selectedLocationX ?? 0) Y:\(selectedLocationY ?? 0) ")
+                .fixedSize(horizontal: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
 
-            Spacer()
+                
 
             GeometryReader { geometry in
                 ZStack(alignment: .topLeading) {
@@ -60,16 +60,28 @@ struct SoreLocationView: View {
                 }
             }
             .frame(width: diagramWidth, height: diagramHeight)
+            Text("Tap Sore Location")
+                .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+    
+            Text("X:\(selectedLocationX ?? 0) Y:\(selectedLocationY ?? 0) ")
 
-            Text("Sore Size: \(Int(soreSize)) mm")
-            Slider(value: $soreSize, in: 1...20, step: 1)
-                .padding()
-                .disabled(selectedLocationX == nil || selectedLocationY == nil)
+            HStack {
+                Text("Sore Size: \(Int(soreSize)) mm")
+                Slider(value: $soreSize, in: 1...20, step: 1)
+                    .padding()
+                    .disabled(selectedLocationX == nil || selectedLocationY == nil)
+            }
+            .padding(.leading)
 
-            Text("Pain Score: \(Int(painScore))")
-            Slider(value: $painScore, in: 0...10, step: 1)
-                .padding()
-                .disabled(selectedLocationX == nil || selectedLocationY == nil)
+            HStack {
+                Text("Pain Score: \(Int(painScore))     ")
+                Slider(value: $painScore, in: 0...10, step: 1)
+                    .padding()
+                    .disabled(selectedLocationX == nil || selectedLocationY == nil)
+            }
+            .padding(.leading)
+
+
 
             HStack {
                 CustomButton(buttonLabel: "Finish") {
@@ -99,14 +111,6 @@ struct SoreLocationView: View {
             
             let xZoomed = (x * imageScale[imageName]!.scaleX) + imageScale[imageName]!.xOffset
             let yZoomed = (y * imageScale[imageName]!.scaleY) + imageScale[imageName]!.yOffset
-            
-//            let sx: Double = 0.476
-//            let ox: Double = 102.33
-//            let sy: Double = 0.308
-//            let oy: Double = 171.5
-//        
-//            let xCoordinateFull = sx * x + ox
-//            let yCoordinateFull = sy * y + oy
             
             let newCankerSore = CankerSore(
                 lastUpdated: [Date()],

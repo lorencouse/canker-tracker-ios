@@ -26,4 +26,5 @@ struct ImageScale {
     var scaleY: Double
     var xOffset: Double
     var yOffset: Double
+    var viewName: String
 }

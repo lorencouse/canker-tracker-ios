@@ -24,11 +24,12 @@ struct Constants {
         Color.pain10
     ]
     static let imageScaleValues: [String: ImageScale] = [
-        "tongue": ImageScale(scaleX: 0.6, scaleY: 0.6, xOffset: 74.2, yOffset: 162.73),
-        "lowerGums": ImageScale(scaleX: 0.558, scaleY: 0.558, xOffset: 81.30, yOffset: 175.87),
-        "upperGums": ImageScale(scaleX: 0.576, scaleY: 0.576, xOffset: 81.16, yOffset: -49.2),
-        "leftCheek": ImageScale(scaleX: 0.338, scaleY: 1.583, xOffset: 0, yOffset: -191.16),
-        "rightCheek": ImageScale(scaleX: 0.338, scaleY: 1.583, xOffset: 250, yOffset: -191.16)
+        "tongue": ImageScale(scaleX: 0.6, scaleY: 0.6, xOffset: 74.2, yOffset: 162.73, viewName: "Tongue"
+                            ),
+        "lowerGums": ImageScale(scaleX: 0.558, scaleY: 0.558, xOffset: 81.30, yOffset: 175.87, viewName: "Lower Gums"),
+        "upperGums": ImageScale(scaleX: 0.576, scaleY: 0.576, xOffset: 81.16, yOffset: -49.2, viewName: "Upper Gums"),
+        "leftCheek": ImageScale(scaleX: 0.338, scaleY: 1.583, xOffset: 0, yOffset: -191.16, viewName: "Left Cheek"),
+        "rightCheek": ImageScale(scaleX: 0.338, scaleY: 1.583, xOffset: 250, yOffset: -191.16, viewName: "Right Cheek")
     ]
     static let diagramWidth: Double = 380
     static let diagramHeight: Double = 380

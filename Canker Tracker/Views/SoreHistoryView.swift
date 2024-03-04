@@ -47,6 +47,10 @@ struct SoreHistoryView: View {
                     AppDataManager.deleteFile(fileName: Constants.soreDataFileName)
                     fetchSoreHistory()
                 }
+                CustomButton(buttonLabel: "Edit") {
+                    AppDataManager.deleteFile(fileName: Constants.soreDataFileName)
+                    fetchSoreHistory()
+                }
                 
                 NavigationButton(destination: MouthDiagramView(), label: "Add New")
                 
