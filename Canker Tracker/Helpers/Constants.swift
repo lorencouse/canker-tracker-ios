@@ -10,6 +10,7 @@ import SwiftUI
 
 struct Constants {
     static let soreDataFileName = "cankerSoreData.json"
+    static let dailyLogFileName = "dailyLogData.json"
     static let painScaleColors: [Color] = [
         Color.pain0,
         Color.pain1,

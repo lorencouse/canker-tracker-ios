@@ -64,11 +64,18 @@ struct SoreHistoryView: View {
                     imageName = "mouthDiagram"
                 }
                 
-                NavigationButton(destination: MouthDiagramView(), label: "Add New")
+
                 
-                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, isEditing: isEditing), isActive: $locationIsSelected)
+
                 
              }
+            
+            HStack {
+                NavigationButton(destination: MouthDiagramView(), label: "Add New")
+                NavigationButton(destination: DailyLogView(), label: "Survey")
+            }
+            
+            NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, isEditing: isEditing), isActive: $locationIsSelected)
             
         }
         .onAppear {

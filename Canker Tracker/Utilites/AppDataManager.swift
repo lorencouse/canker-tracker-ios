@@ -10,7 +10,7 @@ import Foundation
 class AppDataManager {
     static let shared = AppDataManager()
     
-    func saveCankerSoreData(_ cankerSore: CankerSore) {
+    func appendCankerSoreData(_ cankerSore: CankerSore) {
         var soresHistory = AppDataManager.loadFile(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
         soresHistory.append(cankerSore)
         saveCankerSoresData(soresHistory)
@@ -23,6 +23,51 @@ class AppDataManager {
             
             if let encoded = try? encoder.encode(sores) {
                 try? encoded.write(to: filePath)
+            }
+        }
+    }
+    
+    func saveJsonData<T: Codable>(_ objectArray: [T], fileName: String) {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted // Optional: Makes the JSON easier to read.
+        
+        if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let filePath = documentDirectory.appendingPathComponent(fileName)
+            
+            do {
+                let encoded = try encoder.encode(objectArray)
+                try encoded.write(to: filePath, options: .atomic)
+                print("Data saved to \(filePath)")
+            } catch {
+                print("Failed to save data: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func appendJsonData<T: Codable>(_ newObjects: [T], fileName: String) {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted // Makes the JSON easier to read.
+        
+        let fileManager = FileManager.default
+        if let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let filePath = documentDirectory.appendingPathComponent(fileName)
+            
+            // Attempt to load existing data
+            var objectsToSave: [T] = []
+            if let data = try? Data(contentsOf: filePath), let existingObjects = try? JSONDecoder().decode([T].self, from: data) {
+                objectsToSave.append(contentsOf: existingObjects)
+            }
+            
+            // Append new objects to the loaded data
+            objectsToSave.append(contentsOf: newObjects)
+            
+            // Save the updated array back to the file
+            do {
+                let encoded = try encoder.encode(objectsToSave)
+                try encoded.write(to: filePath, options: .atomic)
+                print("Data appended to \(filePath)")
+            } catch {
+                print("Failed to append data: \(error.localizedDescription)")
             }
         }
     }
@@ -90,4 +135,49 @@ class AppDataManager {
         }
     }
     
+}
+
+func saveJsonData<T: Codable>(_ objectArray: [T], fileName: String) {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .prettyPrinted // Optional: Makes the JSON easier to read.
+    
+    if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+        let filePath = documentDirectory.appendingPathComponent(fileName)
+        
+        do {
+            let encoded = try encoder.encode(objectArray)
+            try encoded.write(to: filePath, options: .atomic)
+            print("Data saved to \(filePath)")
+        } catch {
+            print("Failed to save data: \(error.localizedDescription)")
+        }
+    }
+}
+
+func appendJsonData<T: Codable>(_ newObjects: [T], fileName: String) {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .prettyPrinted // Makes the JSON easier to read.
+    
+    let fileManager = FileManager.default
+    if let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+        let filePath = documentDirectory.appendingPathComponent(fileName)
+        
+        // Attempt to load existing data
+        var objectsToSave: [T] = []
+        if let data = try? Data(contentsOf: filePath), let existingObjects = try? JSONDecoder().decode([T].self, from: data) {
+            objectsToSave.append(contentsOf: existingObjects)
+        }
+        
+        // Append new objects to the loaded data
+        objectsToSave.append(contentsOf: newObjects)
+        
+        // Save the updated array back to the file
+        do {
+            let encoded = try encoder.encode(objectsToSave)
+            try encoded.write(to: filePath, options: .atomic)
+            print("Data appended to \(filePath)")
+        } catch {
+            print("Failed to append data: \(error.localizedDescription)")
+        }
+    }
 }

@@ -24,7 +24,7 @@ class SoreViewModel: ObservableObject {
             AppDataManager.shared.updateCankerSoreData(sore, withNewSize: newSize, andNewPain: newPain)
         } else {
             sores.append(sore)
-            AppDataManager.shared.saveCankerSoreData(sore)
+            AppDataManager.shared.appendCankerSoreData(sore)
         }
     }
 }

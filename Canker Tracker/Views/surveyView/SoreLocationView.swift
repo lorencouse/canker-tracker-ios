@@ -167,7 +167,7 @@ struct SoreLocationView: View {
                 xCoordinate: xZoomed,
                 yCoordinate: yZoomed
             )
-            AppDataManager.shared.saveCankerSoreData(newCankerSore)
+            AppDataManager.shared.appendCankerSoreData(newCankerSore)
         }
     }
 }
