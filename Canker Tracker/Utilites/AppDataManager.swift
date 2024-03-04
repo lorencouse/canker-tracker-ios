@@ -11,16 +11,47 @@ class AppDataManager {
     static let shared = AppDataManager()
     
     func saveCankerSoreData(_ cankerSore: CankerSore) {
+        var soresHistory = AppDataManager.loadFile(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
+        soresHistory.append(cankerSore)
+        saveCankerSoresData(soresHistory)
+    }
+    
+    func saveCankerSoresData(_ sores: [CankerSore]) {
         let encoder = JSONEncoder()
         if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let filePath = documentDirectory.appendingPathComponent(Constants.soreDataFileName)
             
-            var soresHistory: [CankerSore] = AppDataManager.loadFile(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
-            soresHistory.append(cankerSore)
-            
-            if let encoded = try? encoder.encode(soresHistory) {
+            if let encoded = try? encoder.encode(sores) {
                 try? encoded.write(to: filePath)
             }
+        }
+    }
+    
+    func updateCankerSoreData(_ cankerSore: CankerSore, withNewSize newSize: Double, andNewPain newPain: Double) {
+        // Load existing sores
+        var soresHistory: [CankerSore] = AppDataManager.loadFile(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
+        
+        // Find the sore to update
+        if let index = soresHistory.firstIndex(where: { $0 == cankerSore }) {
+            let lastUpdateDate = soresHistory[index].lastUpdated.last ?? Date.distantPast
+            let currentDate = Date()
+            
+            // Check if the last update was on a different day
+            let calendar = Calendar.current
+            if !calendar.isDate(lastUpdateDate, inSameDayAs: currentDate) {
+                // Append new values and date
+                soresHistory[index].lastUpdated.append(currentDate)
+                soresHistory[index].size.append(newSize)
+                soresHistory[index].painLevel.append(newPain)
+            } else {
+                // Overwrite the most recent values
+                soresHistory[index].lastUpdated[soresHistory[index].lastUpdated.count - 1] = currentDate
+                soresHistory[index].size[soresHistory[index].size.count - 1] = newSize
+                soresHistory[index].painLevel[soresHistory[index].painLevel.count - 1] = newPain
+            }
+            
+            // Save the updated sores array
+            saveCankerSoresData(soresHistory)
         }
     }
     
@@ -58,7 +89,5 @@ class AppDataManager {
             print("Error deleting file: \(error)")
         }
     }
-    
-    
     
 }

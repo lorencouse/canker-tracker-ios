@@ -3,6 +3,7 @@ import SwiftUI
 
 
 struct MouthDiagramView: View {
+    @State var isEditing: Bool = false
     let diagramHeight: CGFloat = Constants.diagramHeight
     let diagramWidth: CGFloat = Constants.diagramWidth
     @State private var selectedLocation: String = "none"
@@ -27,48 +28,72 @@ struct MouthDiagramView: View {
                         DragGesture(minimumDistance: 0)
                             .onEnded { value in
                                 let location = value.location
-                                selectLocation(at: location)
+                                selectedLocation = selectLocation(at: location)
+                                locationIsSelected = true
                             }
                     )
                 
                 Spacer()
-                    NavigationLink("", destination: SoreLocationView(imageName: selectedLocation), isActive: $locationIsSelected)
+                
+                HStack {
+                    CustomButton(buttonLabel: "Add") {
+                        isEditing = false
+                    }
+                    
+                    CustomButton(buttonLabel: "Edit") {
+                        isEditing = true
+                    }
+
+                }
+
+                
+                
+                
+                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, isEditing: isEditing), isActive: $locationIsSelected)
                 
             }
             
         }
     }
     
-    func selectLocation(at location: CGPoint) {
-        
-        if location.x < diagramWidth * 0.33 {
-            if location.y < diagramHeight * 0.5 {
-                selectedLocation = "leftCheek"
-            } else {
-                selectedLocation = "mouthDiagram"
-            }
-        } else if location.x < diagramWidth * 0.66 {
-            if location.y < diagramHeight * 0.5 {
-                selectedLocation = "upperGums"
-            } else {
-                selectedLocation = "tongue"
-            }
-        
-            
-        } else {
-            if location.y < diagramHeight * 0.5 {
-                selectedLocation = "rightCheek"
-            } else {
-                selectedLocation = "lowerGums"
-            }
-        }
-        
-        if selectedLocation != "none" {
-            locationIsSelected = true
-        }
-    }
+    
 
 }
+
+
+func selectLocation(at location: CGPoint) -> String {
+    let diagramWidth = Constants.diagramWidth
+    let diagramHeight = Constants.diagramHeight
+    var selectedLocation: String = "none"
+    
+    if location.x < diagramWidth * 0.33 {
+        if location.y < diagramHeight * 0.5 {
+            selectedLocation = "leftCheek"
+        } else {
+            selectedLocation = "mouthDiagram"
+        }
+    } else if location.x < diagramWidth * 0.66 {
+        if location.y < diagramHeight * 0.5 {
+            selectedLocation = "upperGums"
+        } else {
+            selectedLocation = "tongue"
+        }
+    
+        
+    } else {
+        if location.y < diagramHeight * 0.5 {
+            selectedLocation = "rightCheek"
+        } else {
+            selectedLocation = "lowerGums"
+        }
+    }
+    
+//    if selectedLocation != "none" {
+//        locationIsSelected = true
+//    }
+    return selectedLocation
+}
+
 #Preview {
     MouthDiagramView()
 }

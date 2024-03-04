@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 
 struct SoreHistoryView: View {
+    @State var isEditing: Bool
+    @State var selectedLocation: String = "none"
+    @State var locationIsSelected: Bool = false
+    @State var imageName: String = "mouthDiagramNoLabels"
     @State var soresHistory: [CankerSore] = []
     let diagramHeight: Double = Constants.diagramHeight
     let diagramWidth: Double = Constants.diagramWidth
@@ -23,12 +27,20 @@ struct SoreHistoryView: View {
             Spacer()
             
             ZStack(alignment: .topLeading) {
-                Image("mouthDiagramNoLabels")
+                Image(imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: diagramWidth, height: diagramHeight)
                     .contentShape(Rectangle())
                     .edgesIgnoringSafeArea(.all)
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onEnded { value in
+                                let location = value.location
+                                selectedLocation = selectLocation(at: location)
+                                locationIsSelected = true
+                            }
+                    )
                 
                 ForEach(soresHistory, id:\.self) {
                     sore in
@@ -48,11 +60,13 @@ struct SoreHistoryView: View {
                     fetchSoreHistory()
                 }
                 CustomButton(buttonLabel: "Edit") {
-                    AppDataManager.deleteFile(fileName: Constants.soreDataFileName)
-                    fetchSoreHistory()
+                    isEditing = true
+                    imageName = "mouthDiagram"
                 }
                 
                 NavigationButton(destination: MouthDiagramView(), label: "Add New")
+                
+                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, isEditing: isEditing), isActive: $locationIsSelected)
                 
              }
             
@@ -72,5 +86,5 @@ struct SoreHistoryView: View {
 }
 
 #Preview {
-    SoreHistoryView(soresHistory: [])
+    SoreHistoryView(isEditing: false, soresHistory: [])
 }
