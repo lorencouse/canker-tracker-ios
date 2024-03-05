@@ -55,7 +55,7 @@ struct DailyLogView: View {
                 
                 CustomButton(buttonLabel: "Finish", action: RecordLog)
                 
-                NavigationLink(destination: SoreHistoryView(isEditing: false), isActive: $logRecorded) { EmptyView() }
+                NavigationLink(destination: SoreHistoryView(isEditing: false, addNew: false), isActive: $logRecorded) { EmptyView() }
                 
             }
             .navigationTitle("Daily Log for \(dateFormatter.string(from: date))")
@@ -66,7 +66,7 @@ struct DailyLogView: View {
     }
     
     private func loadActiveSoreIds() {
-        let allSores: [CankerSore] = AppDataManager.loadFile(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
+        let allSores: [CankerSore] = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
         let activeSoreIds: [UUID] = allSores.filter { !$0.healed }.map { $0.id }
 
         self.activeSoresID = activeSoreIds
@@ -75,7 +75,7 @@ struct DailyLogView: View {
     private func RecordLog() {
         let dailyLog = DailyLog(date: date, activeSoresID: activeSoresID, currentlySick: currentlySick, sugarUse: sugarUse, spicyFood: spicyFood, caffineUse: caffineUse, carbonatedDrinks: carbonatedDrinks, alcoholicDrinks: alcoholicDrinks, hoursOfSleep: hoursOfSleep, stressLevel: stressLevel, notes: notes)
         
-        saveJsonData([dailyLog], fileName: Constants.dailyLogFileName)
+        AppDataManager.shared.saveJsonData([dailyLog], fileName: Constants.dailyLogFileName)
         
         logRecorded = true
     }

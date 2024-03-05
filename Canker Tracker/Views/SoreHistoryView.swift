@@ -10,10 +10,12 @@ import SwiftUI
 
 struct SoreHistoryView: View {
     @State var isEditing: Bool
-    @State var selectedLocation: String = "none"
+    @State var addNew: Bool
     @State var locationIsSelected: Bool = false
+    @State var selectedLocation: String = "none"
     @State var imageName: String = "mouthDiagramNoLabels"
     @State var soresHistory: [CankerSore] = []
+    @State var headerText: String = "Canker Sore History"
     let diagramHeight: Double = Constants.diagramHeight
     let diagramWidth: Double = Constants.diagramWidth
     
@@ -22,7 +24,7 @@ struct SoreHistoryView: View {
             VStack {
                 
                 Spacer()
-                Text("Canker Sore History")
+                Text(headerText)
                     .font(.title)
                 
                 Spacer()
@@ -38,8 +40,11 @@ struct SoreHistoryView: View {
                             DragGesture(minimumDistance: 0)
                                 .onEnded { value in
                                     let location = value.location
-                                    selectedLocation = selectLocation(at: location)
-                                    locationIsSelected = true
+                                    if addNew || isEditing {
+                                        selectedLocation = selectLocation(at: location)
+                                        locationIsSelected = true
+
+                                    }
                                 }
                         )
                     
@@ -57,41 +62,62 @@ struct SoreHistoryView: View {
                 
                 HStack {
                     CustomButton(buttonLabel: "Clear") {
-                        AppDataManager.deleteFile(fileName: Constants.soreDataFileName)
+                        AppDataManager.deleteJsonData(fileName: Constants.soreDataFileName)
                         fetchSoreHistory()
                     }
-                    CustomButton(buttonLabel: "Edit") {
-                        isEditing = true
-                        imageName = "mouthDiagram"
+                    CustomButton(buttonLabel: "Edit Mode") {
+                        isEditing.toggle()
+                        if isEditing && addNew {
+                            addNew.toggle()
+                        }
+                        if isEditing {imageName = "mouthDiagramNoLabels"
+                            headerText = "Edit Mode"}
                     }
-                    
-                    
                     
                 }
                 
                 HStack {
-                    NavigationButton(destination: MouthDiagramView(), label: "Add New")
+                    CustomButton(buttonLabel: "Add Mode") {
+                        addNew.toggle()
+                        if isEditing && addNew {
+                            isEditing.toggle()
+                        }
+                        if addNew {imageName = "mouthDiagram"
+                        headerText = "Add New Sore"} else {imageName = "mouthDiagramNoLabels"}
+
+                    }
+
                     NavigationButton(destination: DailyLogView(), label: "Survey")
                 }
+                    
+                    NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, isEditing: isEditing), isActive: $locationIsSelected)
+                    
+            
+
                 
-                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, viewModel: SoreViewModel(), isEditing: isEditing), isActive: $locationIsSelected)
+                
+                
                 
             }
         }
         .onAppear {
             fetchSoreHistory()
+            if addNew {
+                imageName = "mouthDiagram"
+            }
         }
         
     }
 
     
     private func fetchSoreHistory() {
-        soresHistory = AppDataManager.loadFile(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
-        print(soresHistory)
+        soresHistory = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
     }
+    
+    
     
 }
 
 #Preview {
-    SoreHistoryView(isEditing: false, soresHistory: [])
+    SoreHistoryView(isEditing: false, addNew: false, soresHistory: [])
 }

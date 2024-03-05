@@ -11,7 +11,7 @@ import SwiftData
 struct ContentView: View {
     
     var body: some View {
-        SoreLocationView(imageName: "lips", viewModel: SoreViewModel(), isEditing: false)
+        SoreLocationView(imageName: "lips", isEditing: false)
     }
     
 }
