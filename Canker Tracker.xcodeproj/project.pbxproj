@@ -22,7 +22,7 @@
 		E99A09A02B94393000557E24 /* SoreHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A099F2B94393000557E24 /* SoreHistoryView.swift */; };
 		E99A09A52B94433900557E24 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A09A42B94433900557E24 /* Constants.swift */; };
 		E99A09A72B94488F00557E24 /* SoreObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A09A62B94488F00557E24 /* SoreObjectView.swift */; };
-		E9D5D87A2B8F14A80099AB25 /* SoreLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D5D8792B8F14A80099AB25 /* SoreLocationView.swift */; };
+		E9EA07CD2B96E61C0050427E /* SoreLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA07CC2B96E61C0050427E /* SoreLocationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +42,7 @@
 		E99A099F2B94393000557E24 /* SoreHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreHistoryView.swift; sourceTree = "<group>"; };
 		E99A09A42B94433900557E24 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E99A09A62B94488F00557E24 /* SoreObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreObjectView.swift; sourceTree = "<group>"; };
-		E9D5D8792B8F14A80099AB25 /* SoreLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreLocationView.swift; sourceTree = "<group>"; };
+		E9EA07CC2B96E61C0050427E /* SoreLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreLocationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				E9291D3D2B8EF3AF0001FD88 /* MouthDiagramView.swift */,
-				E9D5D8792B8F14A80099AB25 /* SoreLocationView.swift */,
 				E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */,
+				E9EA07CC2B96E61C0050427E /* SoreLocationView.swift */,
 			);
 			path = surveyView;
 			sourceTree = "<group>";
@@ -224,10 +224,10 @@
 				E99A09A02B94393000557E24 /* SoreHistoryView.swift in Sources */,
 				E94856622B934791001C32F1 /* CankerSore.swift in Sources */,
 				E95DA9E32B959F9900BAC152 /* SoreViewModel.swift in Sources */,
+				E9EA07CD2B96E61C0050427E /* SoreLocationView.swift in Sources */,
 				E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */,
 				E99A09A72B94488F00557E24 /* SoreObjectView.swift in Sources */,
 				E9291D3E2B8EF3AF0001FD88 /* MouthDiagramView.swift in Sources */,
-				E9D5D87A2B8F14A80099AB25 /* SoreLocationView.swift in Sources */,
 				E95DA9E72B95EF7200BAC152 /* DailyLogView.swift in Sources */,
 				E99A09A52B94433900557E24 /* Constants.swift in Sources */,
 				E95DA9EA2B95F22100BAC152 /* DailyLogComponents.swift in Sources */,

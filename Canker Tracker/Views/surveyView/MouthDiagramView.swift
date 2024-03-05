@@ -49,7 +49,7 @@ struct MouthDiagramView: View {
                 
                 
                 
-                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, isEditing: isEditing), isActive: $locationIsSelected)
+                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, viewModel: SoreViewModel(), isEditing: isEditing), isActive: $locationIsSelected)
                 
             }
             

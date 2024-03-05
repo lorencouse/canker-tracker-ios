@@ -18,65 +18,65 @@ struct SoreHistoryView: View {
     let diagramWidth: Double = Constants.diagramWidth
     
     var body: some View {
-        VStack {
-            
-            Spacer()
-            Text("Canker Sore History")
-                .font(.title)
-            
-            Spacer()
-            
-            ZStack(alignment: .topLeading) {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: diagramWidth, height: diagramHeight)
-                    .contentShape(Rectangle())
-                    .edgesIgnoringSafeArea(.all)
-                    .gesture(
-                        DragGesture(minimumDistance: 0)
-                            .onEnded { value in
-                                let location = value.location
-                                selectedLocation = selectLocation(at: location)
-                                locationIsSelected = true
-                            }
-                    )
+        NavigationStack {
+            VStack {
                 
-                ForEach(soresHistory, id:\.self) {
-                    sore in
-                    SoreObjectView(sore: sore)
-
+                Spacer()
+                Text("Canker Sore History")
+                    .font(.title)
+                
+                Spacer()
+                
+                ZStack(alignment: .topLeading) {
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: diagramWidth, height: diagramHeight)
+                        .contentShape(Rectangle())
+                        .edgesIgnoringSafeArea(.all)
+                        .gesture(
+                            DragGesture(minimumDistance: 0)
+                                .onEnded { value in
+                                    let location = value.location
+                                    selectedLocation = selectLocation(at: location)
+                                    locationIsSelected = true
+                                }
+                        )
+                    
+                    ForEach(soresHistory, id:\.self) {
+                        sore in
+                        SoreObjectView(sore: sore)
+                        
+                        
+                    }
+                    
+                }
+                .frame(width: diagramWidth, height: diagramHeight)
+                
+                Spacer()
+                
+                HStack {
+                    CustomButton(buttonLabel: "Clear") {
+                        AppDataManager.deleteFile(fileName: Constants.soreDataFileName)
+                        fetchSoreHistory()
+                    }
+                    CustomButton(buttonLabel: "Edit") {
+                        isEditing = true
+                        imageName = "mouthDiagram"
+                    }
+                    
+                    
                     
                 }
                 
-            }
-            .frame(width: diagramWidth, height: diagramHeight)
-            
-            Spacer()
-
-            HStack {
-                CustomButton(buttonLabel: "Clear") {
-                    AppDataManager.deleteFile(fileName: Constants.soreDataFileName)
-                    fetchSoreHistory()
-                }
-                CustomButton(buttonLabel: "Edit") {
-                    isEditing = true
-                    imageName = "mouthDiagram"
+                HStack {
+                    NavigationButton(destination: MouthDiagramView(), label: "Add New")
+                    NavigationButton(destination: DailyLogView(), label: "Survey")
                 }
                 
-
+                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, viewModel: SoreViewModel(), isEditing: isEditing), isActive: $locationIsSelected)
                 
-
-                
-             }
-            
-            HStack {
-                NavigationButton(destination: MouthDiagramView(), label: "Add New")
-                NavigationButton(destination: DailyLogView(), label: "Survey")
             }
-            
-            NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, isEditing: isEditing), isActive: $locationIsSelected)
-            
         }
         .onAppear {
             fetchSoreHistory()

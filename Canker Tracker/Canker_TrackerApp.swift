@@ -13,7 +13,7 @@ struct Canker_TrackerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MouthDiagramView()
+            SoreHistoryView(isEditing: false)
         }
 
     }
