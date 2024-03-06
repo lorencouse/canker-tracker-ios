@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DailyLogView: View {
     
-    @State private var logRecorded: Bool = false
+    @State private var logUpToDate: Bool = false
     @State private var date: Date = Date()
     @State private var currentlySick: Bool = false
     @State private var sugarUse: Bool = false
@@ -55,7 +55,7 @@ struct DailyLogView: View {
                 
                 CustomButton(buttonLabel: "Finish", action: RecordLog)
                 
-                NavigationLink(destination: SoreHistoryView(isEditing: false, addNew: false), isActive: $logRecorded) { EmptyView() }
+                NavigationLink(destination: SoreHistoryView(isEditing: false, addNew: false), isActive: $logUpToDate) { EmptyView() }
                 
             }
             .navigationTitle("Daily Log for \(dateFormatter.string(from: date))")
@@ -68,7 +68,6 @@ struct DailyLogView: View {
     private func loadActiveSoreIds() {
         let allSores: [CankerSore] = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
         let activeSoreIds: [UUID] = allSores.filter { !$0.healed }.map { $0.id }
-
         self.activeSoresID = activeSoreIds
     }
     

@@ -15,9 +15,9 @@ struct SoreHistoryView: View {
     @State var selectedLocation: String = "none"
     @State var imageName: String = "mouthDiagramNoLabels"
     @State var soresHistory: [CankerSore] = []
+    @State var lastLog: DailyLog? = nil
     @State var headerText: String = "Canker Sore History"
     let diagramHeight: Double = Constants.diagramHeight
-    let diagramWidth: Double = Constants.diagramWidth
     
     var body: some View {
         NavigationStack {
@@ -33,7 +33,7 @@ struct SoreHistoryView: View {
                     Image(imageName)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: diagramWidth, height: diagramHeight)
+                        .frame(width: diagramHeight, height: diagramHeight)
                         .contentShape(Rectangle())
                         .edgesIgnoringSafeArea(.all)
                         .gesture(
@@ -56,7 +56,7 @@ struct SoreHistoryView: View {
                     }
                     
                 }
-                .frame(width: diagramWidth, height: diagramHeight)
+                .frame(width: diagramHeight, height: diagramHeight)
                 
                 Spacer()
                 
@@ -105,6 +105,7 @@ struct SoreHistoryView: View {
             if addNew {
                 imageName = "mouthDiagram"
             }
+            lastLog = loadLastLog()
         }
         
     }
@@ -116,6 +117,65 @@ struct SoreHistoryView: View {
     
     
     
+}
+
+func loadLastLog() -> DailyLog? {
+    if let logFiles = AppDataManager.loadJsonData(fileName: Constants.dailyLogFileName, type: [DailyLog].self) {
+        return logFiles.last
+    }
+    else {
+        return nil
+    }
+    
+    }
+
+func checkIfDailyLogUpToDate(lastLog: DailyLog) -> Bool {
+    
+    if DailyLog.self == nil {
+        return false
+    } else {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        
+        let components = calendar.dateComponents([.hour], from: lastLog.date, to: currentDate)
+        if let hours = components.hour, hours <= 20 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+
+}
+
+func selectLocation(at location: CGPoint) -> String {
+    let diagramWidth = Constants.diagramWidth
+    let diagramHeight = Constants.diagramHeight
+    var selectedLocation: String = "none"
+    
+    if location.x < diagramWidth * 0.33 {
+        if location.y < diagramHeight * 0.5 {
+            selectedLocation = "leftCheek"
+        } else {
+            selectedLocation = "mouthDiagram"
+        }
+    } else if location.x < diagramWidth * 0.66 {
+        if location.y < diagramHeight * 0.5 {
+            selectedLocation = "upperGums"
+        } else {
+            selectedLocation = "tongue"
+        }
+    
+        
+    } else {
+        if location.y < diagramHeight * 0.5 {
+            selectedLocation = "rightCheek"
+        } else {
+            selectedLocation = "lowerGums"
+        }
+    }
+    
+    return selectedLocation
 }
 
 #Preview {

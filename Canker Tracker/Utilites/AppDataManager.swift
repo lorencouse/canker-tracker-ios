@@ -82,7 +82,7 @@ class AppDataManager {
         }
     }
     
-    func updateLastEntry<T: Codable>(_ newObject: T, fileName: String) {
+    func updateSoreData(_ newSore: CankerSore, fileName: String) {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         
@@ -90,26 +90,30 @@ class AppDataManager {
         if let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             let filePath = documentDirectory.appendingPathComponent(fileName)
             
-            var objectsToUpdate: [T] = []
-            if let data = try? Data(contentsOf: filePath), let existingObjects = try? JSONDecoder().decode([T].self, from: data) {
-                objectsToUpdate = existingObjects
+            var soresToUpdate: [CankerSore] = []
+            if let data = try? Data(contentsOf: filePath), let existingSores = try? JSONDecoder().decode([CankerSore].self, from: data) {
+                soresToUpdate = existingSores
             }
             
-            if !objectsToUpdate.isEmpty {
-                objectsToUpdate[objectsToUpdate.count - 1] = newObject
+            if let index = soresToUpdate.firstIndex(where: { $0.id == newSore.id }) {
+                soresToUpdate[index] = newSore
             } else {
-                objectsToUpdate.append(newObject)
+                soresToUpdate.append(newSore)
             }
             
-            // Save the updated array back to the file
             do {
-                let encoded = try encoder.encode(objectsToUpdate)
+                let encoded = try encoder.encode(soresToUpdate)
                 try encoded.write(to: filePath, options: .atomic)
-                print("Last entry updated in \(filePath)")
+                print("Sore data updated in \(filePath)")
             } catch {
-                print("Failed to update last entry: \(error.localizedDescription)")
+                print("Failed to update sore data: \(error.localizedDescription)")
             }
         }
+    }
+
+    
+    static func overwriteSoreData() {
+        
     }
 
     

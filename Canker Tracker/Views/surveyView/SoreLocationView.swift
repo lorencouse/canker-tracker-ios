@@ -202,7 +202,7 @@ private extension SoreLocationView {
     var navigationLinks: some View {
         Group {
             NavigationLink(destination:SoreHistoryView(isEditing: false, addNew: true), isActive: $addMoreSores) { EmptyView() }
-            NavigationLink(destination: SoreHistoryView(isEditing: false, addNew: false), isActive: $finishedAdding) { EmptyView() }
+            NavigationLink(destination: DailyLogView(), isActive: $finishedAdding) { EmptyView() }
         }
     }
     
