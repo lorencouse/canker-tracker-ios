@@ -64,12 +64,16 @@ struct DailyLogManager {
             print("No Daily Log.")
             return false
         }
+        
 
         let currentDate = Date()
         let calendar = Calendar.current
         
         let components = calendar.dateComponents([.hour], from: lastLog.date, to: currentDate)
-        if let hours = components.hour, hours < 24 {
+        if lastLog.currentlySick == nil {
+            print("Daily Log Not Upto Date.")
+            return false
+        } else if let hours = components.hour, hours < 24 {
             print("Daily Log Upto Date.")
             return true
         } else {

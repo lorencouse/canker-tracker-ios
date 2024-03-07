@@ -13,13 +13,13 @@ struct CankerSore: Codable, Hashable {
     var lastUpdated: [Date]
     var numberOfDays: Int
     var healed: Bool
-    let location: String
+    let locationImage: String
     var soreSize: [Double]
     var painLevel: [Double]
     let xCoordinateZoomed: Double
     let yCoordinateZoomed: Double
-    let xCoordinate: Double
-    let yCoordinate: Double
+    let xCoordinateScaled: Double
+    let yCoordinateScaled: Double
 }
 
 struct ImageScale {

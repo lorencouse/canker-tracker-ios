@@ -62,9 +62,9 @@ struct SoreHistoryView: View {
                 
                 HStack {
                     CustomButton(buttonLabel: "Clear") {
-                        AppDataManager.deleteJsonData(fileName: Constants.dailyLogFileName)
-                        AppDataManager.deleteJsonData(fileName: Constants.soreDataFileName)
-                        soresHistory = []
+                        
+                        resetAppData()
+                        
                     }
                     CustomButton(buttonLabel: "Edit Mode") {
                         isEditing.toggle()
@@ -109,7 +109,17 @@ struct SoreHistoryView: View {
         
     }
     
+    private func resetAppData() {
+        AppDataManager.deleteJsonData(fileName: Constants.dailyLogFileName)
+        AppDataManager.deleteJsonData(fileName: Constants.soreDataFileName)
+        soresHistory = []
+        soreLogUptoDate = false
+
+    }
+    
 }
+
+
 
 
 

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SoreLocationView: View {
     let imageName: String
-    let soreLogUptoDate: Bool
+    var soreLogUptoDate: Bool
     let soreID = UUID()
     @State var isEditing: Bool
     @State private var selectedSore: CankerSore?
@@ -79,13 +79,14 @@ struct SoreLocationView: View {
             .onAppear {             if isEditing {
                 loadSoresForDiagram(for: imageName)
             }
+//             soreLogUptoDate =   DailyLogManager.checkIfDailyLogUpToDate(lastLog: DailyLogManager.loadLastLog())
             }
     }
     
     func loadSoresForDiagram(for imageName: String) {
         let allSores = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
         existingSores = allSores.filter { sore in
-            sore.location == imageName
+            sore.locationImage == imageName
         }
     }
 
@@ -179,7 +180,9 @@ private extension SoreLocationView {
     var actionButtons: some View {
         HStack {
             CustomButton(buttonLabel: "Finish") {
-                saveNewCankerSore()
+                
+                CankerSoreManager.saveNewCankerSore(id: soreID, lastUpdated: [Date()], numberOfDays: 1, healed: false, location: imageName, soreSize: soreSize, painLevel: painLevel, xCoordinateZoomed: selectedLocationX ?? 0, yCoordinateZoomed: selectedLocationY ?? 0)
+                
                 if soreLogUptoDate {
                     navigateTo = "SoreHistory"
                 } else {
@@ -195,13 +198,16 @@ private extension SoreLocationView {
             }
             else {
                 CustomButton(buttonLabel: "Add More") {
-                    saveNewCankerSore()
+                    CankerSoreManager.saveNewCankerSore(id: soreID, lastUpdated: [Date()], numberOfDays: 1, healed: false, location: imageName, soreSize: soreSize, painLevel: painLevel, xCoordinateZoomed: selectedLocationX ?? 0, yCoordinateZoomed: selectedLocationY ?? 0)
+//                    saveNewCankerSore()
                     addMoreSores = true
                 }
             }
             
         }
     }
+    
+    
     
     var navigationLinks: some View {
         Group {
@@ -225,53 +231,16 @@ private extension SoreLocationView {
         painLevel = sore.painLevel.last ?? 3
     }
     
-    private func calculateScaledCoordinates(selectedLocationX: Double, selectedLocationY: Double, imageName: String) -> [Double] {
-        let imageScale = Constants.imageScaleValues
-        
-            let xScaled = (selectedLocationX * imageScale[imageName]!.scaleX) + imageScale[imageName]!.xOffset
-            let yScaled = (selectedLocationY * imageScale[imageName]!.scaleY) + imageScale[imageName]!.yOffset
-            return [xScaled, yScaled]
-  
-    }
-    
-    private func saveNewCankerSore() {
-        
-        let scaledCoordinates: [Double] = calculateScaledCoordinates(selectedLocationX: selectedLocationX ?? 0, selectedLocationY: selectedLocationY ?? 0, imageName: imageName)
-            
-//            Create new CankerSore object
-
-            
-            let newCankerSore = CankerSore(
-                id: soreID,
-                lastUpdated: [Date()],
-                numberOfDays: 1,
-                healed: false,
-                location: imageName,
-                soreSize: [soreSize],
-                painLevel: [painLevel],
-                xCoordinateZoomed: selectedLocationX ?? 0,
-                yCoordinateZoomed: selectedLocationY ?? 0,
-                xCoordinate: scaledCoordinates[0],
-                yCoordinate: scaledCoordinates[1]
-            )
-            
-//            Save CankerSore
-            AppDataManager.shared.appendJsonData([newCankerSore], fileName: Constants.soreDataFileName)
-            DailyLogManager.AddSoreIdToLatestLog(soreID: soreID)
-        
-    }
-    
-    
     func selectNearestSore(to location: CGPoint) {
         guard let closestSore = existingSores.min(by: {
-            let distance1 = distance(from: CGPoint(x: $0.xCoordinate, y: $0.yCoordinate), to: location)
-            let distance2 = distance(from: CGPoint(x: $1.xCoordinate, y: $1.yCoordinate), to: location)
+            let distance1 = distance(from: CGPoint(x: $0.xCoordinateScaled, y: $0.yCoordinateScaled), to: location)
+            let distance2 = distance(from: CGPoint(x: $1.xCoordinateScaled, y: $1.yCoordinateScaled), to: location)
             return distance1 < distance2
         }) else { return }
         
         selectedSore = closestSore
-        selectedLocationX = closestSore.xCoordinate
-        selectedLocationY = closestSore.yCoordinate
+        selectedLocationX = closestSore.xCoordinateScaled
+        selectedLocationY = closestSore.yCoordinateScaled
         soreSize = closestSore.soreSize.last ?? 3
         painLevel = closestSore.painLevel.last ?? 3
         circleOutlineColor = Color.red

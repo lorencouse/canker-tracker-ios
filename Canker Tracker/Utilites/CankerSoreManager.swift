@@ -10,7 +10,6 @@ import Foundation
 struct CankerSoreManager {
     
     static func loadActiveSores(activeSoreIds: [UUID]) -> [CankerSore] {
-        //        let activeSoreIds = DailyLogManager.loadCurrentSoreIds()
         
         if activeSoreIds.isEmpty {
             return []
@@ -57,7 +56,7 @@ struct CankerSoreManager {
     }
     
     
-    private func calculateScaledCoordinates(selectedLocationX: Double, selectedLocationY: Double, imageName: String) -> [Double] {
+    static func calculateScaledCoordinates(selectedLocationX: Double, selectedLocationY: Double, imageName: String) -> [Double] {
         let imageScale = Constants.imageScaleValues
         
         let xScaled = (selectedLocationX * imageScale[imageName]!.scaleX) + imageScale[imageName]!.xOffset
@@ -66,35 +65,31 @@ struct CankerSoreManager {
         
     }
     
-    private func saveNewCankerSore( id: UUID,
+    static func saveNewCankerSore( id: UUID,
                                     lastUpdated: [Date],
                                     numberOfDays: Int,
                                     healed: Bool,
                                     location: String,
-                                    size: Double,
+                                    soreSize: Double,
                                     painLevel: Double,
                                     xCoordinateZoomed: Double,
-                                    yCoordinateZoomed: Double,
-                                    xCoordinate: Double,
-                                    yCoordinate: Double) {
+                                    yCoordinateZoomed: Double) {
         
         let scaledCoordinates: [Double] = calculateScaledCoordinates(selectedLocationX: xCoordinateZoomed, selectedLocationY: yCoordinateZoomed, imageName: location)
         
         //            Create new CankerSore object
-        
-        
         let newCankerSore = CankerSore(
             id: id,
             lastUpdated: lastUpdated,
             numberOfDays: numberOfDays,
             healed: healed,
-            location: location,
-            soreSize: [size],
+            locationImage: location,
+            soreSize: [soreSize],
             painLevel: [painLevel],
             xCoordinateZoomed: xCoordinateZoomed,
             yCoordinateZoomed: yCoordinateZoomed,
-            xCoordinate: scaledCoordinates[0],
-            yCoordinate: scaledCoordinates[1]
+            xCoordinateScaled: scaledCoordinates[0],
+            yCoordinateScaled: scaledCoordinates[1]
         )
         
         //            Save CankerSore
@@ -103,7 +98,5 @@ struct CankerSoreManager {
         
     }
     
-    static func overwriteSoreData() {
-        
-    }
+
 }

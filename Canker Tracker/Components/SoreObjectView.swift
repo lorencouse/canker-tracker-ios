@@ -17,7 +17,7 @@ struct SoreObjectView: View {
             .fill(Constants.painScaleColors[Int(sore.painLevel[0])])
             .stroke(Color.black, lineWidth: 1)
             .frame(width: sore.soreSize[0] * 2, height: sore.soreSize[0] * 2)
-            .offset(x: sore.xCoordinate - sore.soreSize[0], y: sore.yCoordinate - sore.soreSize[0])
+            .offset(x: sore.xCoordinateScaled - sore.soreSize[0], y: sore.yCoordinateScaled - sore.soreSize[0])
     }
 }
 

@@ -15,7 +15,6 @@
 		E951881A2B99938300D30A03 /* YesNoSoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95188192B99938300D30A03 /* YesNoSoreView.swift */; };
 		E951881C2B99968300D30A03 /* CankerSoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E951881B2B99968300D30A03 /* CankerSoreManager.swift */; };
 		E951881E2B99969100D30A03 /* DailyLogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E951881D2B99969100D30A03 /* DailyLogManager.swift */; };
-		E95DA9E32B959F9900BAC152 /* SoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E22B959F9900BAC152 /* SoreViewModel.swift */; };
 		E95DA9E52B95EC3400BAC152 /* DailyLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E42B95EC3400BAC152 /* DailyLog.swift */; };
 		E95DA9E72B95EF7200BAC152 /* DailyLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */; };
 		E95DA9EA2B95F22100BAC152 /* DailyLogComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E92B95F22100BAC152 /* DailyLogComponents.swift */; };
@@ -36,7 +35,6 @@
 		E95188192B99938300D30A03 /* YesNoSoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesNoSoreView.swift; sourceTree = "<group>"; };
 		E951881B2B99968300D30A03 /* CankerSoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerSoreManager.swift; sourceTree = "<group>"; };
 		E951881D2B99969100D30A03 /* DailyLogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogManager.swift; sourceTree = "<group>"; };
-		E95DA9E22B959F9900BAC152 /* SoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreViewModel.swift; sourceTree = "<group>"; };
 		E95DA9E42B95EC3400BAC152 /* DailyLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLog.swift; sourceTree = "<group>"; };
 		E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogView.swift; sourceTree = "<group>"; };
 		E95DA9E92B95F22100BAC152 /* DailyLogComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogComponents.swift; sourceTree = "<group>"; };
@@ -110,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				E94856612B934791001C32F1 /* CankerSore.swift */,
-				E95DA9E22B959F9900BAC152 /* SoreViewModel.swift */,
 				E95DA9E42B95EC3400BAC152 /* DailyLog.swift */,
 			);
 			path = Models;
@@ -226,7 +223,6 @@
 			files = (
 				E99A09A02B94393000557E24 /* SoreHistoryView.swift in Sources */,
 				E94856622B934791001C32F1 /* CankerSore.swift in Sources */,
-				E95DA9E32B959F9900BAC152 /* SoreViewModel.swift in Sources */,
 				E9EA07CD2B96E61C0050427E /* SoreLocationView.swift in Sources */,
 				E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */,
 				E99A09A72B94488F00557E24 /* SoreObjectView.swift in Sources */,
