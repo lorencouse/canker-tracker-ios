@@ -81,40 +81,6 @@ class AppDataManager {
             }
         }
     }
-    
-    func updateSoreData(_ newSore: CankerSore, fileName: String) {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        let fileManager = FileManager.default
-        if let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let filePath = documentDirectory.appendingPathComponent(fileName)
-            
-            var soresToUpdate: [CankerSore] = []
-            if let data = try? Data(contentsOf: filePath), let existingSores = try? JSONDecoder().decode([CankerSore].self, from: data) {
-                soresToUpdate = existingSores
-            }
-            
-            if let index = soresToUpdate.firstIndex(where: { $0.id == newSore.id }) {
-                soresToUpdate[index] = newSore
-            } else {
-                soresToUpdate.append(newSore)
-            }
-            
-            do {
-                let encoded = try encoder.encode(soresToUpdate)
-                try encoded.write(to: filePath, options: .atomic)
-                print("Sore data updated in \(filePath)")
-            } catch {
-                print("Failed to update sore data: \(error.localizedDescription)")
-            }
-        }
-    }
-
-    
-    static func overwriteSoreData() {
-        
-    }
 
     
     

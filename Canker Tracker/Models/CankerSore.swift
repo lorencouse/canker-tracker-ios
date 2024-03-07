@@ -9,12 +9,12 @@ import Foundation
 import CoreGraphics
 
 struct CankerSore: Codable, Hashable {
-    var id: UUID
+    let id: UUID
     var lastUpdated: [Date]
     var numberOfDays: Int
     var healed: Bool
     let location: String
-    var size: [Double]
+    var soreSize: [Double]
     var painLevel: [Double]
     let xCoordinateZoomed: Double
     let yCoordinateZoomed: Double

@@ -10,18 +10,20 @@ import SwiftUI
 
 struct SoreLocationView: View {
     let imageName: String
-    
-    @State var selectedSore: CankerSore?
-    @State var existingSores: [CankerSore] = []
+    let soreLogUptoDate: Bool
+    let soreID = UUID()
     @State var isEditing: Bool
-    @State var addMoreSores: Bool = false
-    @State var finishedAdding: Bool = false
+    @State private var selectedSore: CankerSore?
+    @State private var existingSores: [CankerSore] = []
+    @State private var addMoreSores: Bool = false
+    @State private var navigateTo: String?
+    @State private var healedFilter: Bool = false
     @State private var selectedLocationX: Double? = nil
     @State private var selectedLocationY: Double? = nil
     @State private var soreSize: Double = 3
-    @State private var painScore: Double = 3
+    @State private var painLevel: Double = 3
     @State private var circleOutlineColor: Color = Color.black
-    @State private var healedFilter: Bool = false
+
     
     var body: some View {
         VStack {
@@ -42,7 +44,6 @@ struct SoreLocationView: View {
                     
                     if isEditing {
                         soreButtons
-                       
                     }
                     
                     
@@ -53,7 +54,7 @@ struct SoreLocationView: View {
                     
                     if let x = selectedLocationX, let y = selectedLocationY {
                         Circle()
-                            .fill(Constants.painScaleColors[Int(painScore)])
+                            .fill(Constants.painScaleColors[Int(painLevel)])
                             .stroke(circleOutlineColor, lineWidth: 1)
                             .frame(width: soreSize * 2, height: soreSize * 2)
                             .offset(x: x - soreSize, y: y - soreSize)
@@ -167,8 +168,8 @@ private extension SoreLocationView {
     
     var painScoreSlider: some View {
         HStack {
-            Text("Pain Score: \(soreSize != 0 ? "\(Int(painScore))" : "Healed" )")
-            Slider(value: $painScore, in: 0...10, step: 1)
+            Text("Pain Score: \(soreSize != 0 ? "\(Int(painLevel))" : "Healed" )")
+            Slider(value: $painLevel, in: 0...10, step: 1)
                 .padding()
                 .disabled(selectedLocationX == nil)
         }
@@ -179,14 +180,17 @@ private extension SoreLocationView {
         HStack {
             CustomButton(buttonLabel: "Finish") {
                 saveNewCankerSore()
-                finishedAdding = true
+                if soreLogUptoDate {
+                    navigateTo = "SoreHistory"
+                } else {
+                    navigateTo = "DailyLog"
+                }
             }
                 .disabled(selectedLocationX == nil)
             
             if isEditing {
                 CustomButton(buttonLabel:"Update") {
-                    saveNewCankerSore()
-                    finishedAdding = true
+
                 }
             }
             else {
@@ -201,8 +205,15 @@ private extension SoreLocationView {
     
     var navigationLinks: some View {
         Group {
+
             NavigationLink(destination:SoreHistoryView(isEditing: false, addNew: true), isActive: $addMoreSores) { EmptyView() }
-            NavigationLink(destination: DailyLogView(), isActive: $finishedAdding) { EmptyView() }
+            
+            NavigationLink(destination: DailyLogView(), tag: "DailyLog", selection: $navigateTo) { EmptyView() }
+            
+            NavigationLink(destination: SoreHistoryView(isEditing: false, addNew: false), tag: "SoreHistory", selection: $navigateTo) { EmptyView() }
+
+            
+
         }
     }
     
@@ -210,33 +221,44 @@ private extension SoreLocationView {
         selectedSore = sore
         selectedLocationX = sore.xCoordinateZoomed
         selectedLocationY = sore.yCoordinateZoomed
-        soreSize = sore.size.last ?? 3
-        painScore = sore.painLevel.last ?? 3
+        soreSize = sore.soreSize.last ?? 3
+        painLevel = sore.painLevel.last ?? 3
+    }
+    
+    private func calculateScaledCoordinates(selectedLocationX: Double, selectedLocationY: Double, imageName: String) -> [Double] {
+        let imageScale = Constants.imageScaleValues
+        
+            let xScaled = (selectedLocationX * imageScale[imageName]!.scaleX) + imageScale[imageName]!.xOffset
+            let yScaled = (selectedLocationY * imageScale[imageName]!.scaleY) + imageScale[imageName]!.yOffset
+            return [xScaled, yScaled]
+  
     }
     
     private func saveNewCankerSore() {
         
-        let imageScale = Constants.imageScaleValues
-        if let x = selectedLocationX, let y = selectedLocationY {
+        let scaledCoordinates: [Double] = calculateScaledCoordinates(selectedLocationX: selectedLocationX ?? 0, selectedLocationY: selectedLocationY ?? 0, imageName: imageName)
             
-            let xScaled = (x * imageScale[imageName]!.scaleX) + imageScale[imageName]!.xOffset
-            let yScaled = (y * imageScale[imageName]!.scaleY) + imageScale[imageName]!.yOffset
+//            Create new CankerSore object
+
             
             let newCankerSore = CankerSore(
-                id: UUID(),
+                id: soreID,
                 lastUpdated: [Date()],
                 numberOfDays: 1,
                 healed: false,
                 location: imageName,
-                size: [soreSize],
-                painLevel: [painScore],
-                xCoordinateZoomed: x,
-                yCoordinateZoomed: y,
-                xCoordinate: xScaled,
-                yCoordinate: yScaled
+                soreSize: [soreSize],
+                painLevel: [painLevel],
+                xCoordinateZoomed: selectedLocationX ?? 0,
+                yCoordinateZoomed: selectedLocationY ?? 0,
+                xCoordinate: scaledCoordinates[0],
+                yCoordinate: scaledCoordinates[1]
             )
+            
+//            Save CankerSore
             AppDataManager.shared.appendJsonData([newCankerSore], fileName: Constants.soreDataFileName)
-        }
+            DailyLogManager.AddSoreIdToLatestLog(soreID: soreID)
+        
     }
     
     
@@ -250,8 +272,8 @@ private extension SoreLocationView {
         selectedSore = closestSore
         selectedLocationX = closestSore.xCoordinate
         selectedLocationY = closestSore.yCoordinate
-        soreSize = closestSore.size.last ?? 3
-        painScore = closestSore.painLevel.last ?? 3
+        soreSize = closestSore.soreSize.last ?? 3
+        painLevel = closestSore.painLevel.last ?? 3
         circleOutlineColor = Color.red
     }
 
@@ -259,4 +281,8 @@ private extension SoreLocationView {
         return sqrt(pow(point2.x - point1.x, 2) + pow(point2.y - point1.y, 2))
     }
 
+}
+
+#Preview {
+    SoreLocationView(imageName: "leftCheek", soreLogUptoDate: true, isEditing: false)
 }

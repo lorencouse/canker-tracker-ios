@@ -16,6 +16,7 @@ struct SoreHistoryView: View {
     @State var imageName: String = "mouthDiagramNoLabels"
     @State var soresHistory: [CankerSore] = []
     @State var lastLog: DailyLog? = nil
+    @State var soreLogUptoDate: Bool = false
     @State var headerText: String = "Canker Sore History"
     let diagramHeight: Double = Constants.diagramHeight
     
@@ -52,7 +53,6 @@ struct SoreHistoryView: View {
                         sore in
                         SoreObjectView(sore: sore)
                         
-                        
                     }
                     
                 }
@@ -62,8 +62,9 @@ struct SoreHistoryView: View {
                 
                 HStack {
                     CustomButton(buttonLabel: "Clear") {
+                        AppDataManager.deleteJsonData(fileName: Constants.dailyLogFileName)
                         AppDataManager.deleteJsonData(fileName: Constants.soreDataFileName)
-                        fetchSoreHistory()
+                        soresHistory = []
                     }
                     CustomButton(buttonLabel: "Edit Mode") {
                         isEditing.toggle()
@@ -90,63 +91,27 @@ struct SoreHistoryView: View {
                     NavigationButton(destination: DailyLogView(), label: "Survey")
                 }
                     
-                    NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, isEditing: isEditing), isActive: $locationIsSelected)
-                    
-            
-
-                
-                
-                
+                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, soreLogUptoDate: soreLogUptoDate, isEditing: isEditing), isActive: $locationIsSelected)
                 
             }
         }
         .onAppear {
-            fetchSoreHistory()
             if addNew {
                 imageName = "mouthDiagram"
             }
-            lastLog = loadLastLog()
+            lastLog = DailyLogManager.loadLastLog()
+            soreLogUptoDate = DailyLogManager.checkIfDailyLogUpToDate(lastLog: lastLog)
+            soresHistory = CankerSoreManager.loadActiveSores(activeSoreIds: lastLog?.activeSoresID ?? [])
+            
+            
+
         }
         
     }
-
-    
-    private func fetchSoreHistory() {
-        soresHistory = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
-    }
-    
-    
     
 }
 
-func loadLastLog() -> DailyLog? {
-    if let logFiles = AppDataManager.loadJsonData(fileName: Constants.dailyLogFileName, type: [DailyLog].self) {
-        return logFiles.last
-    }
-    else {
-        return nil
-    }
-    
-    }
 
-func checkIfDailyLogUpToDate(lastLog: DailyLog) -> Bool {
-    
-    if DailyLog.self == nil {
-        return false
-    } else {
-        let currentDate = Date()
-        let calendar = Calendar.current
-        
-        let components = calendar.dateComponents([.hour], from: lastLog.date, to: currentDate)
-        if let hours = components.hour, hours <= 20 {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-
-}
 
 func selectLocation(at location: CGPoint) -> String {
     let diagramWidth = Constants.diagramWidth

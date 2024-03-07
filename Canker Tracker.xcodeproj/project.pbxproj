@@ -12,6 +12,9 @@
 		E9291D372B8EF2790001FD88 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */; };
 		E94856622B934791001C32F1 /* CankerSore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94856612B934791001C32F1 /* CankerSore.swift */; };
 		E94856652B934DA2001C32F1 /* AppDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94856642B934DA2001C32F1 /* AppDataManager.swift */; };
+		E951881A2B99938300D30A03 /* YesNoSoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95188192B99938300D30A03 /* YesNoSoreView.swift */; };
+		E951881C2B99968300D30A03 /* CankerSoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E951881B2B99968300D30A03 /* CankerSoreManager.swift */; };
+		E951881E2B99969100D30A03 /* DailyLogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E951881D2B99969100D30A03 /* DailyLogManager.swift */; };
 		E95DA9E32B959F9900BAC152 /* SoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E22B959F9900BAC152 /* SoreViewModel.swift */; };
 		E95DA9E52B95EC3400BAC152 /* DailyLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E42B95EC3400BAC152 /* DailyLog.swift */; };
 		E95DA9E72B95EF7200BAC152 /* DailyLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */; };
@@ -30,6 +33,9 @@
 		E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E94856612B934791001C32F1 /* CankerSore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerSore.swift; sourceTree = "<group>"; };
 		E94856642B934DA2001C32F1 /* AppDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDataManager.swift; sourceTree = "<group>"; };
+		E95188192B99938300D30A03 /* YesNoSoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesNoSoreView.swift; sourceTree = "<group>"; };
+		E951881B2B99968300D30A03 /* CankerSoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerSoreManager.swift; sourceTree = "<group>"; };
+		E951881D2B99969100D30A03 /* DailyLogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogManager.swift; sourceTree = "<group>"; };
 		E95DA9E22B959F9900BAC152 /* SoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreViewModel.swift; sourceTree = "<group>"; };
 		E95DA9E42B95EC3400BAC152 /* DailyLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLog.swift; sourceTree = "<group>"; };
 		E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogView.swift; sourceTree = "<group>"; };
@@ -114,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				E94856642B934DA2001C32F1 /* AppDataManager.swift */,
+				E951881B2B99968300D30A03 /* CankerSoreManager.swift */,
+				E951881D2B99969100D30A03 /* DailyLogManager.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -121,8 +129,9 @@
 		E970A17D2B9037B4000313E2 /* surveyView */ = {
 			isa = PBXGroup;
 			children = (
-				E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */,
 				E9EA07CC2B96E61C0050427E /* SoreLocationView.swift */,
+				E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */,
+				E95188192B99938300D30A03 /* YesNoSoreView.swift */,
 			);
 			path = surveyView;
 			sourceTree = "<group>";
@@ -221,9 +230,12 @@
 				E9EA07CD2B96E61C0050427E /* SoreLocationView.swift in Sources */,
 				E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */,
 				E99A09A72B94488F00557E24 /* SoreObjectView.swift in Sources */,
+				E951881A2B99938300D30A03 /* YesNoSoreView.swift in Sources */,
 				E95DA9E72B95EF7200BAC152 /* DailyLogView.swift in Sources */,
+				E951881E2B99969100D30A03 /* DailyLogManager.swift in Sources */,
 				E99A09A52B94433900557E24 /* Constants.swift in Sources */,
 				E95DA9EA2B95F22100BAC152 /* DailyLogComponents.swift in Sources */,
+				E951881C2B99968300D30A03 /* CankerSoreManager.swift in Sources */,
 				E9291D2E2B8EF2780001FD88 /* Canker_TrackerApp.swift in Sources */,
 				E95DA9E52B95EC3400BAC152 /* DailyLog.swift in Sources */,
 				E94856652B934DA2001C32F1 /* AppDataManager.swift in Sources */,

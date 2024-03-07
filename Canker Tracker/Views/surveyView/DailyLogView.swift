@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DailyLogView: View {
     
-    @State private var logUpToDate: Bool = false
+    @State private var soreLogUptoDate: Bool = false
     @State private var date: Date = Date()
     @State private var currentlySick: Bool = false
     @State private var sugarUse: Bool = false
@@ -53,9 +53,14 @@ struct DailyLogView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
                 
-                CustomButton(buttonLabel: "Finish", action: RecordLog)
-                
-                NavigationLink(destination: SoreHistoryView(isEditing: false, addNew: false), isActive: $logUpToDate) { EmptyView() }
+                CustomButton(buttonLabel: "Finish") {
+                    // Call the function directly
+                    DailyLogManager.RecordDailyLog(date: date, activeSoresID: activeSoresID, currentlySick: currentlySick, sugarUse: sugarUse, spicyFood: spicyFood, caffineUse: caffineUse, carbonatedDrinks: carbonatedDrinks, alcoholicDrinks: alcoholicDrinks, hoursOfSleep: hoursOfSleep, stressLevel: stressLevel, notes: notes)
+
+                    soreLogUptoDate = true
+                }
+
+                NavigationLink(destination: SoreHistoryView(isEditing: false, addNew: false), isActive: $soreLogUptoDate) { EmptyView() }
                 
             }
             .navigationTitle("Daily Log for \(dateFormatter.string(from: date))")
@@ -69,14 +74,6 @@ struct DailyLogView: View {
         let allSores: [CankerSore] = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
         let activeSoreIds: [UUID] = allSores.filter { !$0.healed }.map { $0.id }
         self.activeSoresID = activeSoreIds
-    }
-    
-    private func RecordLog() {
-        let dailyLog = DailyLog(date: date, activeSoresID: activeSoresID, currentlySick: currentlySick, sugarUse: sugarUse, spicyFood: spicyFood, caffineUse: caffineUse, carbonatedDrinks: carbonatedDrinks, alcoholicDrinks: alcoholicDrinks, hoursOfSleep: hoursOfSleep, stressLevel: stressLevel, notes: notes)
-        
-        AppDataManager.shared.saveJsonData([dailyLog], fileName: Constants.dailyLogFileName)
-        
-        logRecorded = true
     }
     
 }

@@ -9,14 +9,14 @@ import Foundation
 
 struct DailyLog: Codable {
     let date: Date
-    let activeSoresID: [UUID]
-    let currentlySick: Bool?
-    let sugarUse: Bool?
-    let spicyFood: Bool?
-    let caffineUse: Int?
-    let carbonatedDrinks: Int?
-    let alcoholicDrinks: Int?
-    let hoursOfSleep: Int?
-    let stressLevel: Int?
+    var activeSoresID: [UUID]
+    var currentlySick: Bool?
+    var sugarUse: Bool?
+    var spicyFood: Bool?
+    var caffineUse: Int?
+    var carbonatedDrinks: Int?
+    var alcoholicDrinks: Int?
+    var hoursOfSleep: Int?
+    var stressLevel: Int?
     var notes: String?
 }
