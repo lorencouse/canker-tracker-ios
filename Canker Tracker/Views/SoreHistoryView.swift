@@ -101,7 +101,7 @@ struct SoreHistoryView: View {
             }
             lastLog = DailyLogManager.loadLastLog()
             soreLogUptoDate = DailyLogManager.checkIfDailyLogUpToDate(lastLog: lastLog)
-            soresHistory = CankerSoreManager.loadActiveSores(activeSoreIds: lastLog?.activeSoresID ?? [])
+            soresHistory = CankerSoreManager.loadActiveSores(imageName: nil)
             
             
 

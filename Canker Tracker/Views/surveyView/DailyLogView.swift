@@ -65,15 +65,9 @@ struct DailyLogView: View {
             }
             .navigationTitle("Daily Log for \(dateFormatter.string(from: date))")
             .onAppear {
-                loadActiveSoreIds()
+                activeSoresID = DailyLogManager.loadCurrentSoreIds()
             }
         }
-    }
-    
-    private func loadActiveSoreIds() {
-        let allSores: [CankerSore] = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
-        let activeSoreIds: [UUID] = allSores.filter { !$0.healed }.map { $0.id }
-        self.activeSoresID = activeSoreIds
     }
     
 }

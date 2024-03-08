@@ -51,7 +51,6 @@ struct SoreLocationView: View {
                         .contentShape(Rectangle())
                         .gesture(dragGesture)
                     
-                    
                     if let x = selectedLocationX, let y = selectedLocationY {
                         Circle()
                             .fill(Constants.painScaleColors[Int(painLevel)])
@@ -77,18 +76,15 @@ struct SoreLocationView: View {
         }
         navigationLinks
             .onAppear {             if isEditing {
-                loadSoresForDiagram(for: imageName)
+               existingSores = CankerSoreManager.loadActiveSores(imageName: imageName)
+                
+                
             }
-//             soreLogUptoDate =   DailyLogManager.checkIfDailyLogUpToDate(lastLog: DailyLogManager.loadLastLog())
+
             }
     }
     
-    func loadSoresForDiagram(for imageName: String) {
-        let allSores = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
-        existingSores = allSores.filter { sore in
-            sore.locationImage == imageName
-        }
-    }
+
 
     
 }
@@ -129,22 +125,11 @@ private extension SoreLocationView {
     var soreButtons: some View {
         ForEach(existingSores, id: \.self) { sore in
             
-            if healedFilter {
-                if sore.healed {
-                    
-                    Button(action: { selectSore(sore) }) {
-                        SoreObjectView(sore: sore)
-                        
-                }
-            }
-            
-            }
-            
-            else {
+
                 Button(action: { selectSore(sore) }) {
-                    SoreObjectView(sore: sore)
+                    SoreObjectZoomedView(sore: sore)
                 }
-            }
+            
             
         }
     }
@@ -192,10 +177,17 @@ private extension SoreLocationView {
                 .disabled(selectedLocationX == nil)
             
             if isEditing {
-                CustomButton(buttonLabel:"Update") {
-
-                }
-            }
+                HStack {
+                    CustomButton(buttonLabel:"Update") {
+                        CankerSoreManager.overwriteSoreData(selectedSore)
+                    navigateTo = "SoreHistory"
+                        
+                    }
+                    CustomButton(buttonLabel:"Delete") {
+                        CankerSoreManager.deleteSore(soreID: selectedSore?.id)   
+                        navigateTo = "SoreHistory"
+                    }
+                } }
             else {
                 CustomButton(buttonLabel: "Add More") {
                     CankerSoreManager.saveNewCankerSore(id: soreID, lastUpdated: [Date()], numberOfDays: 1, healed: false, location: imageName, soreSize: soreSize, painLevel: painLevel, xCoordinateZoomed: selectedLocationX ?? 0, yCoordinateZoomed: selectedLocationY ?? 0)
@@ -233,14 +225,14 @@ private extension SoreLocationView {
     
     func selectNearestSore(to location: CGPoint) {
         guard let closestSore = existingSores.min(by: {
-            let distance1 = distance(from: CGPoint(x: $0.xCoordinateScaled, y: $0.yCoordinateScaled), to: location)
-            let distance2 = distance(from: CGPoint(x: $1.xCoordinateScaled, y: $1.yCoordinateScaled), to: location)
+            let distance1 = distance(from: CGPoint(x: $0.xCoordinateZoomed, y: $0.yCoordinateZoomed), to: location)
+            let distance2 = distance(from: CGPoint(x: $1.xCoordinateZoomed, y: $1.yCoordinateZoomed), to: location)
             return distance1 < distance2
         }) else { return }
         
         selectedSore = closestSore
-        selectedLocationX = closestSore.xCoordinateScaled
-        selectedLocationY = closestSore.yCoordinateScaled
+        selectedLocationX = closestSore.xCoordinateZoomed
+        selectedLocationY = closestSore.yCoordinateZoomed
         soreSize = closestSore.soreSize.last ?? 3
         painLevel = closestSore.painLevel.last ?? 3
         circleOutlineColor = Color.red

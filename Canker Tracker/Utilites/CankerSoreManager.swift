@@ -9,8 +9,8 @@ import Foundation
 
 struct CankerSoreManager {
     
-    static func loadActiveSores(activeSoreIds: [UUID]) -> [CankerSore] {
-        
+    static func loadActiveSores(imageName: String?) -> [CankerSore] {
+        let activeSoreIds = DailyLogManager.loadCurrentSoreIds()
         if activeSoreIds.isEmpty {
             return []
         }
@@ -20,40 +20,78 @@ struct CankerSoreManager {
         }
         
         let activeSores = allSores.filter { activeSoreIds.contains($0.id) }
-        print(activeSores)
-        return activeSores
-        
-    }
-    
-    
-    static func updateSoreData(_ newSore: CankerSore, fileName: String) {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        let fileManager = FileManager.default
-        if let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let filePath = documentDirectory.appendingPathComponent(fileName)
-            
-            var soresToUpdate: [CankerSore] = []
-            if let data = try? Data(contentsOf: filePath), let existingSores = try? JSONDecoder().decode([CankerSore].self, from: data) {
-                soresToUpdate = existingSores
+        if imageName != nil {
+            let activeSoresForImage = activeSores.filter { sore in
+                sore.locationImage == imageName
             }
-            
-            if let index = soresToUpdate.firstIndex(where: { $0.id == newSore.id }) {
-                soresToUpdate[index] = newSore
-            } else {
-                soresToUpdate.append(newSore)
-            }
-            
-            do {
-                let encoded = try encoder.encode(soresToUpdate)
-                try encoded.write(to: filePath, options: .atomic)
-                print("Sore data updated in \(filePath)")
-            } catch {
-                print("Failed to update sore data: \(error.localizedDescription)")
-            }
+            return activeSoresForImage
+        } else {
+            print(activeSores)
+            return activeSores
         }
+        
+
+        
     }
+    
+    static func deleteSore(soreID: UUID?) {
+        
+        guard let unwrappedID = soreID else {
+            return
+        }
+        
+        var allDailyLogs = AppDataManager.loadJsonData(fileName: Constants.dailyLogFileName, type: [DailyLog].self) ?? []
+
+        var allCankerSores = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
+
+        allCankerSores.removeAll { $0.id == unwrappedID }
+
+        AppDataManager.shared.saveJsonData(allCankerSores, fileName: Constants.soreDataFileName)
+
+        for i in 0..<allDailyLogs.count {
+            allDailyLogs[i].activeSoresID.removeAll { $0 == unwrappedID }
+        }
+
+        AppDataManager.shared.saveJsonData(allDailyLogs, fileName: Constants.dailyLogFileName)
+    }
+
+    
+    static func overwriteSoreData(_ newSore: CankerSore?) {
+        
+        guard let unwrappedSore = newSore else {
+            return
+        }
+        
+        var allCankerSores: [CankerSore] = AppDataManager.loadJsonData(fileName: Constants.soreDataFileName, type: [CankerSore].self) ?? []
+            
+        if let index = allCankerSores.firstIndex(where: { $0.id == unwrappedSore.id }) {
+            allCankerSores[index] = unwrappedSore
+        } else {
+            allCankerSores.append(unwrappedSore)
+        }
+        
+        AppDataManager.shared.saveJsonData(allCankerSores, fileName: Constants.soreDataFileName)
+        
+    }
+
+    
+    static func addDailyLogToExistingSore(existingSore: CankerSore, soreSize: Double, painLevel: Double) {
+        
+        if soreSize == 0 {
+//            Sore is healed
+            return
+        } else {
+//            Add new day log to existing sore
+            let today = Date()
+            var updatedSore = existingSore
+            updatedSore.soreSize.append(soreSize)
+            updatedSore.painLevel.append(painLevel)
+            updatedSore.lastUpdated.append(today)
+            overwriteSoreData(updatedSore)
+        }
+        
+    }
+    
     
     
     static func calculateScaledCoordinates(selectedLocationX: Double, selectedLocationY: Double, imageName: String) -> [Double] {
@@ -82,7 +120,6 @@ struct CankerSoreManager {
             id: id,
             lastUpdated: lastUpdated,
             numberOfDays: numberOfDays,
-            healed: healed,
             locationImage: location,
             soreSize: [soreSize],
             painLevel: [painLevel],
