@@ -60,7 +60,7 @@ struct DailyLogView: View {
                     soreLogUptoDate = true
                 }
 
-                NavigationLink(destination: SoreHistoryView(isEditing: false, addNew: false), isActive: $soreLogUptoDate) { EmptyView() }
+                NavigationLink(destination: MainMouthView(), isActive: $soreLogUptoDate) { EmptyView() }
                 
             }
             .navigationTitle("Daily Log for \(dateFormatter.string(from: date))")

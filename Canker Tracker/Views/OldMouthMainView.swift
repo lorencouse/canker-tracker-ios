@@ -8,15 +8,19 @@
 import Foundation
 import SwiftUI
 
-struct SoreHistoryView: View {
+struct OldMouthMainView: View {
+    @State var soresList: [CankerSore] = []
+    @State var lastLog: DailyLog? = nil
+    @State private var selectedSore: CankerSore?
+    @State var soreLogUptoDate: Bool = false
     @State var isEditing: Bool
     @State var addNew: Bool
     @State var locationIsSelected: Bool = false
-    @State var selectedLocation: String = "none"
+    @State private var selectedX: Double? = nil
+    @State private var selectedY: Double? = nil
+    @State private var circleOutlineColor: Color = Color.black
+    @State var selectedZone: String = "none"
     @State var imageName: String = "mouthDiagramNoLabels"
-    @State var soresHistory: [CankerSore] = []
-    @State var lastLog: DailyLog? = nil
-    @State var soreLogUptoDate: Bool = false
     @State var headerText: String = "Canker Sore History"
     let diagramHeight: Double = Constants.diagramHeight
     
@@ -42,16 +46,19 @@ struct SoreHistoryView: View {
                                 .onEnded { value in
                                     let location = value.location
                                     if addNew || isEditing {
-                                        selectedLocation = selectLocation(at: location)
+                                        selectedZone = TapManager.selectMouthZone(at: location)
                                         locationIsSelected = true
 
+                                    } else {
+//                                        drawExistingSore(sore: TapManager.findNearestSore(to: location, from: soresList)!, circleOutlineColor: Color.red)
                                     }
                                 }
                         )
                     
-                    ForEach(soresHistory, id:\.self) {
+                    ForEach(soresList, id:\.self) {
                         sore in
-                        SoreObjectView(sore: sore)
+//                        drawExistingSore(sore: sore, circleOutlineColor: Color.black)
+                        DrawZoomedSoreCircle(selectedSore: sore)
                         
                     }
                     
@@ -91,28 +98,27 @@ struct SoreHistoryView: View {
                     NavigationButton(destination: DailyLogView(), label: "Survey")
                 }
                     
-                NavigationLink("", destination: SoreLocationView(imageName: selectedLocation, soreLogUptoDate: soreLogUptoDate, isEditing: isEditing), isActive: $locationIsSelected)
+                NavigationLink("", destination: AddSoreView(imageName: selectedZone, soreLogUptoDate: soreLogUptoDate), isActive: $locationIsSelected)
                 
             }
         }
         .onAppear {
-            if addNew {
-                imageName = "mouthDiagram"
-            }
+//            if addNew {
+//                imageName = "mouthDiagram"
+//            }
             lastLog = DailyLogManager.loadLastLog()
             soreLogUptoDate = DailyLogManager.checkIfDailyLogUpToDate(lastLog: lastLog)
-            soresHistory = CankerSoreManager.loadActiveSores(imageName: nil)
-            
-            
+            soresList = CankerSoreManager.loadActiveSores(imageName: nil)
 
         }
         
     }
     
     private func resetAppData() {
+        
         AppDataManager.deleteJsonData(fileName: Constants.dailyLogFileName)
         AppDataManager.deleteJsonData(fileName: Constants.soreDataFileName)
-        soresHistory = []
+        soresList = []
         soreLogUptoDate = false
 
     }
@@ -123,36 +129,6 @@ struct SoreHistoryView: View {
 
 
 
-func selectLocation(at location: CGPoint) -> String {
-    let diagramWidth = Constants.diagramWidth
-    let diagramHeight = Constants.diagramHeight
-    var selectedLocation: String = "none"
-    
-    if location.x < diagramWidth * 0.33 {
-        if location.y < diagramHeight * 0.5 {
-            selectedLocation = "leftCheek"
-        } else {
-            selectedLocation = "mouthDiagram"
-        }
-    } else if location.x < diagramWidth * 0.66 {
-        if location.y < diagramHeight * 0.5 {
-            selectedLocation = "upperGums"
-        } else {
-            selectedLocation = "tongue"
-        }
-    
-        
-    } else {
-        if location.y < diagramHeight * 0.5 {
-            selectedLocation = "rightCheek"
-        } else {
-            selectedLocation = "lowerGums"
-        }
-    }
-    
-    return selectedLocation
-}
-
 #Preview {
-    SoreHistoryView(isEditing: false, addNew: false, soresHistory: [])
+    OldMouthMainView(soresList: [], isEditing: false, addNew: false)
 }

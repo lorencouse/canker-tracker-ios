@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E928F8D92BA3E37200334B2B /* TapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928F8D82BA3E37200334B2B /* TapManager.swift */; };
 		E9291D2E2B8EF2780001FD88 /* Canker_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9291D2D2B8EF2780001FD88 /* Canker_TrackerApp.swift */; };
 		E9291D342B8EF2790001FD88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D332B8EF2790001FD88 /* Assets.xcassets */; };
 		E9291D372B8EF2790001FD88 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */; };
+		E93E990D2BA5432A00FBE4A6 /* MainMouthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93E990C2BA5432A00FBE4A6 /* MainMouthView.swift */; };
+		E93E990F2BA5457D00FBE4A6 /* SelectMouthZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93E990E2BA5457D00FBE4A6 /* SelectMouthZoneView.swift */; };
+		E93E99112BA54C4800FBE4A6 /* AddSoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93E99102BA54C4800FBE4A6 /* AddSoreView.swift */; };
+		E93E99132BA54C5600FBE4A6 /* EditSoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93E99122BA54C5600FBE4A6 /* EditSoreView.swift */; };
 		E94856622B934791001C32F1 /* CankerSore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94856612B934791001C32F1 /* CankerSore.swift */; };
 		E94856652B934DA2001C32F1 /* AppDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94856642B934DA2001C32F1 /* AppDataManager.swift */; };
 		E951881A2B99938300D30A03 /* YesNoSoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95188192B99938300D30A03 /* YesNoSoreView.swift */; };
@@ -19,17 +24,23 @@
 		E95DA9E72B95EF7200BAC152 /* DailyLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */; };
 		E95DA9EA2B95F22100BAC152 /* DailyLogComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95DA9E92B95F22100BAC152 /* DailyLogComponents.swift */; };
 		E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970A1812B903F06000313E2 /* NavigationButton.swift */; };
-		E99A09A02B94393000557E24 /* SoreHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A099F2B94393000557E24 /* SoreHistoryView.swift */; };
+		E99A09A02B94393000557E24 /* OldMouthMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A099F2B94393000557E24 /* OldMouthMainView.swift */; };
 		E99A09A52B94433900557E24 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A09A42B94433900557E24 /* Constants.swift */; };
-		E99A09A72B94488F00557E24 /* SoreObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A09A62B94488F00557E24 /* SoreObjectView.swift */; };
-		E9EA07CD2B96E61C0050427E /* SoreLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA07CC2B96E61C0050427E /* SoreLocationView.swift */; };
+		E99A09A72B94488F00557E24 /* ExistingSoreCircleObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A09A62B94488F00557E24 /* ExistingSoreCircleObjectView.swift */; };
+		E9C2C2D42BAAC6850000300B /* CustomSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2C2D32BAAC6850000300B /* CustomSliders.swift */; };
+		E9EA07CD2B96E61C0050427E /* MouthZonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA07CC2B96E61C0050427E /* MouthZonesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E928F8D82BA3E37200334B2B /* TapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapManager.swift; sourceTree = "<group>"; };
 		E9291D2A2B8EF2780001FD88 /* Canker Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Canker Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9291D2D2B8EF2780001FD88 /* Canker_TrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canker_TrackerApp.swift; sourceTree = "<group>"; };
 		E9291D332B8EF2790001FD88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9291D362B8EF2790001FD88 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E93E990C2BA5432A00FBE4A6 /* MainMouthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMouthView.swift; sourceTree = "<group>"; };
+		E93E990E2BA5457D00FBE4A6 /* SelectMouthZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMouthZoneView.swift; sourceTree = "<group>"; };
+		E93E99102BA54C4800FBE4A6 /* AddSoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSoreView.swift; sourceTree = "<group>"; };
+		E93E99122BA54C5600FBE4A6 /* EditSoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSoreView.swift; sourceTree = "<group>"; };
 		E94856612B934791001C32F1 /* CankerSore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CankerSore.swift; sourceTree = "<group>"; };
 		E94856642B934DA2001C32F1 /* AppDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDataManager.swift; sourceTree = "<group>"; };
 		E95188192B99938300D30A03 /* YesNoSoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesNoSoreView.swift; sourceTree = "<group>"; };
@@ -39,10 +50,11 @@
 		E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogView.swift; sourceTree = "<group>"; };
 		E95DA9E92B95F22100BAC152 /* DailyLogComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogComponents.swift; sourceTree = "<group>"; };
 		E970A1812B903F06000313E2 /* NavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
-		E99A099F2B94393000557E24 /* SoreHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreHistoryView.swift; sourceTree = "<group>"; };
+		E99A099F2B94393000557E24 /* OldMouthMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldMouthMainView.swift; sourceTree = "<group>"; };
 		E99A09A42B94433900557E24 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		E99A09A62B94488F00557E24 /* SoreObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreObjectView.swift; sourceTree = "<group>"; };
-		E9EA07CC2B96E61C0050427E /* SoreLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoreLocationView.swift; sourceTree = "<group>"; };
+		E99A09A62B94488F00557E24 /* ExistingSoreCircleObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingSoreCircleObjectView.swift; sourceTree = "<group>"; };
+		E9C2C2D32BAAC6850000300B /* CustomSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliders.swift; sourceTree = "<group>"; };
+		E9EA07CC2B96E61C0050427E /* MouthZonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouthZonesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +110,9 @@
 		E9291D3F2B8EF3BD0001FD88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E99A099F2B94393000557E24 /* SoreHistoryView.swift */,
+				E93E990C2BA5432A00FBE4A6 /* MainMouthView.swift */,
+				E93E990E2BA5457D00FBE4A6 /* SelectMouthZoneView.swift */,
+				E99A099F2B94393000557E24 /* OldMouthMainView.swift */,
 				E970A17D2B9037B4000313E2 /* surveyView */,
 			);
 			path = Views;
@@ -119,6 +133,7 @@
 				E94856642B934DA2001C32F1 /* AppDataManager.swift */,
 				E951881B2B99968300D30A03 /* CankerSoreManager.swift */,
 				E951881D2B99969100D30A03 /* DailyLogManager.swift */,
+				E928F8D82BA3E37200334B2B /* TapManager.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -126,7 +141,9 @@
 		E970A17D2B9037B4000313E2 /* surveyView */ = {
 			isa = PBXGroup;
 			children = (
-				E9EA07CC2B96E61C0050427E /* SoreLocationView.swift */,
+				E93E99102BA54C4800FBE4A6 /* AddSoreView.swift */,
+				E93E99122BA54C5600FBE4A6 /* EditSoreView.swift */,
+				E9EA07CC2B96E61C0050427E /* MouthZonesView.swift */,
 				E95DA9E62B95EF7200BAC152 /* DailyLogView.swift */,
 				E95188192B99938300D30A03 /* YesNoSoreView.swift */,
 			);
@@ -137,8 +154,9 @@
 			isa = PBXGroup;
 			children = (
 				E970A1812B903F06000313E2 /* NavigationButton.swift */,
-				E99A09A62B94488F00557E24 /* SoreObjectView.swift */,
+				E99A09A62B94488F00557E24 /* ExistingSoreCircleObjectView.swift */,
 				E95DA9E92B95F22100BAC152 /* DailyLogComponents.swift */,
+				E9C2C2D32BAAC6850000300B /* CustomSliders.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -221,18 +239,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E99A09A02B94393000557E24 /* SoreHistoryView.swift in Sources */,
+				E99A09A02B94393000557E24 /* OldMouthMainView.swift in Sources */,
 				E94856622B934791001C32F1 /* CankerSore.swift in Sources */,
-				E9EA07CD2B96E61C0050427E /* SoreLocationView.swift in Sources */,
+				E9EA07CD2B96E61C0050427E /* MouthZonesView.swift in Sources */,
+				E928F8D92BA3E37200334B2B /* TapManager.swift in Sources */,
 				E970A1822B903F06000313E2 /* NavigationButton.swift in Sources */,
-				E99A09A72B94488F00557E24 /* SoreObjectView.swift in Sources */,
+				E93E99132BA54C5600FBE4A6 /* EditSoreView.swift in Sources */,
+				E93E99112BA54C4800FBE4A6 /* AddSoreView.swift in Sources */,
+				E9C2C2D42BAAC6850000300B /* CustomSliders.swift in Sources */,
+				E99A09A72B94488F00557E24 /* ExistingSoreCircleObjectView.swift in Sources */,
 				E951881A2B99938300D30A03 /* YesNoSoreView.swift in Sources */,
 				E95DA9E72B95EF7200BAC152 /* DailyLogView.swift in Sources */,
+				E93E990D2BA5432A00FBE4A6 /* MainMouthView.swift in Sources */,
 				E951881E2B99969100D30A03 /* DailyLogManager.swift in Sources */,
 				E99A09A52B94433900557E24 /* Constants.swift in Sources */,
 				E95DA9EA2B95F22100BAC152 /* DailyLogComponents.swift in Sources */,
 				E951881C2B99968300D30A03 /* CankerSoreManager.swift in Sources */,
 				E9291D2E2B8EF2780001FD88 /* Canker_TrackerApp.swift in Sources */,
+				E93E990F2BA5457D00FBE4A6 /* SelectMouthZoneView.swift in Sources */,
 				E95DA9E52B95EC3400BAC152 /* DailyLog.swift in Sources */,
 				E94856652B934DA2001C32F1 /* AppDataManager.swift in Sources */,
 			);

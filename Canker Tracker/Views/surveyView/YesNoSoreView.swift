@@ -21,7 +21,7 @@ struct YesNoSoreView: View {
             }
             
             
-            NavigationLink("", destination: SoreHistoryView(isEditing: false, addNew: true), isActive: $activeCankerSores)
+            NavigationLink("", destination: MainMouthView(), isActive: $activeCankerSores)
 
         }
     }

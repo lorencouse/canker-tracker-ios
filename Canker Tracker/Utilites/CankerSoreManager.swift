@@ -94,6 +94,71 @@ struct CankerSoreManager {
     
     
     
+
+    
+//    static func saveNewCankerSore( id: UUID,
+//                                    lastUpdated: [Date],
+//                                    numberOfDays: Int,
+//                                    healed: Bool,
+//                                    location: String,
+//                                    soreSize: Double,
+//                                    painLevel: Double,
+//                                    xCoordinateZoomed: Double,
+//                                    yCoordinateZoomed: Double) {
+//        
+//        let scaledCoordinates: [Double] = calculateScaledCoordinates(selectedLocationX: xCoordinateZoomed, selectedLocationY: yCoordinateZoomed, imageName: location)
+//        
+//        //            Create new CankerSore object
+//        let newCankerSore = CankerSore(
+//            id: id,
+//            lastUpdated: lastUpdated,
+//            numberOfDays: numberOfDays,
+//            locationImage: location,
+//            soreSize: [soreSize],
+//            painLevel: [painLevel],
+//            xCoordinateZoomed: xCoordinateZoomed,
+//            yCoordinateZoomed: yCoordinateZoomed,
+//            xCoordinateScaled: scaledCoordinates[0],
+//            yCoordinateScaled: scaledCoordinates[1]
+//        )
+//        
+//        //            Save CankerSore
+//        AppDataManager.shared.appendJsonData([newCankerSore], fileName: Constants.soreDataFileName)
+//        DailyLogManager.AddSoreIdToLatestLog(soreID: id)
+//        
+//    }
+    
+    static func saveNewCankerSore(newCankerSore: CankerSore?) {
+        if let cankerSoreData = newCankerSore {
+            AppDataManager.shared.appendJsonData([cankerSoreData], fileName: Constants.soreDataFileName)
+            DailyLogManager.AddSoreIdToLatestLog(soreID: cankerSoreData.id)
+        } else {
+            return
+        }
+        
+        
+    }
+    
+    static func initializeNewCankerSore(xCoordinateZoomed: Double, yCoordinateZoomed: Double, imageLocation: String) -> CankerSore {
+        let scaledCoordinates = calculateScaledCoordinates(selectedLocationX: xCoordinateZoomed, selectedLocationY: yCoordinateZoomed, imageName: imageLocation)
+        let id = UUID()
+        
+        let newCankerSore = CankerSore(
+            id: id,
+            lastUpdated: [Date()],
+            numberOfDays: 1,
+            locationImage: imageLocation,
+            soreSize: [3], 
+            painLevel: [3],
+            xCoordinateZoomed: xCoordinateZoomed,
+            yCoordinateZoomed: yCoordinateZoomed,
+            xCoordinateScaled: scaledCoordinates[0],
+            yCoordinateScaled: scaledCoordinates[1]
+        )
+        
+        return newCankerSore
+    }
+    
     static func calculateScaledCoordinates(selectedLocationX: Double, selectedLocationY: Double, imageName: String) -> [Double] {
         let imageScale = Constants.imageScaleValues
         
@@ -102,38 +167,6 @@ struct CankerSoreManager {
         return [xScaled, yScaled]
         
     }
-    
-    static func saveNewCankerSore( id: UUID,
-                                    lastUpdated: [Date],
-                                    numberOfDays: Int,
-                                    healed: Bool,
-                                    location: String,
-                                    soreSize: Double,
-                                    painLevel: Double,
-                                    xCoordinateZoomed: Double,
-                                    yCoordinateZoomed: Double) {
-        
-        let scaledCoordinates: [Double] = calculateScaledCoordinates(selectedLocationX: xCoordinateZoomed, selectedLocationY: yCoordinateZoomed, imageName: location)
-        
-        //            Create new CankerSore object
-        let newCankerSore = CankerSore(
-            id: id,
-            lastUpdated: lastUpdated,
-            numberOfDays: numberOfDays,
-            locationImage: location,
-            soreSize: [soreSize],
-            painLevel: [painLevel],
-            xCoordinateZoomed: xCoordinateZoomed,
-            yCoordinateZoomed: yCoordinateZoomed,
-            xCoordinateScaled: scaledCoordinates[0],
-            yCoordinateScaled: scaledCoordinates[1]
-        )
-        
-        //            Save CankerSore
-        AppDataManager.shared.appendJsonData([newCankerSore], fileName: Constants.soreDataFileName)
-        DailyLogManager.AddSoreIdToLatestLog(soreID: id)
-        
-    }
-    
+
 
 }
