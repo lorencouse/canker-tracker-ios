@@ -45,7 +45,7 @@ struct AddSoreView: View {
                             .gesture(dragGesture)
                         
                         if let x = selectedLocationX, let y = selectedLocationY {
-                            DrawZoomedSoreCircle(selectedSore: selectedSore!)
+                            DrawZoomedSoreCircle(selectedSore: selectedSore!, outlineColor: .red)
                         }
                         
                     }

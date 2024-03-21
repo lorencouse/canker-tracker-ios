@@ -24,10 +24,12 @@ import SwiftUI
 
 struct DrawZoomedSoreCircle: View {
     var selectedSore: CankerSore
+    var outlineColor: Color
+    
     var body: some View {
         Circle()
             .fill(Constants.painScaleColors[Int(selectedSore.painLevel.last ?? 0)])
-            .stroke(Color.black, lineWidth: 1)
+            .stroke(outlineColor, lineWidth: 2)
             .frame(width: (selectedSore.soreSize.last ?? 0) * 2, height: (selectedSore.soreSize.last ?? 0) * 2)
             .offset(x: (selectedSore.xCoordinateZoomed ?? 0) - (selectedSore.soreSize.last ?? 0), y: (selectedSore.yCoordinateZoomed ?? 0) - (selectedSore.soreSize.last ?? 0))
     }
@@ -35,11 +37,13 @@ struct DrawZoomedSoreCircle: View {
 
 struct DrawScaledSoreCircle: View {
     var selectedSore: CankerSore
+    var outlineColor: Color
+    
     var body: some View {
         Circle()
             .fill(Constants.painScaleColors[Int(selectedSore.painLevel.last ?? 0)])
-            .stroke(Color.black, lineWidth: 1)
-            .frame(width: (selectedSore.soreSize.last ?? 0) * 2, height: (selectedSore.soreSize.last ?? 0) * 2)
+            .stroke(outlineColor, lineWidth: 2)
+            .frame(width: (selectedSore.soreSize.last ?? 0), height: (selectedSore.soreSize.last ?? 0))
             .offset(x: (selectedSore.xCoordinateScaled ?? 0) - (selectedSore.soreSize.last ?? 0), y: (selectedSore.yCoordinateScaled ?? 0) - (selectedSore.soreSize.last ?? 0))
     }
 }
