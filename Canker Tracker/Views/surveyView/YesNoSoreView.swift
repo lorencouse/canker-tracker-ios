@@ -21,7 +21,8 @@ struct YesNoSoreView: View {
             }
             
             
-            NavigationLink("", destination: MainMouthView(), isActive: $activeCankerSores)
+            NavigationLink("", destination: SelectMouthZoneView(soreLogUptoDate: false), isActive: $activeCankerSores)
+            NavigationLink("", destination: DailyLogView(), isActive: $noActiveCankerSores)
 
         }
     }

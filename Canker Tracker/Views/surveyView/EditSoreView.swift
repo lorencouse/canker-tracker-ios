@@ -11,12 +11,14 @@ import SwiftUI
 struct EditSoreView: View {
     let imageName: String
     @State var soreLogUptoDate: Bool
-    @State private var selectedSore: CankerSore?
+    @State var selectedSore: CankerSore
     @State private var soresList: [CankerSore] = []
     @State private var navigateTo: String?
     @State private var selectedLocationX: Double? = nil
     @State private var selectedLocationY: Double? = nil
     @State private var circleOutlineColor: Color = Color.black
+    @State private var tempSoreSize: Double = 3
+    @State private var tempPainLevel: Double = 3
 
     
     var body: some View {
@@ -29,7 +31,7 @@ struct EditSoreView: View {
                     .multilineTextAlignment(.center)
                     .fixedSize()
                 
-                ExistingSoresDiagram(soresList: soresList, diagramName: imageName, selectedSore: $selectedSore)
+                ExistingSoresDiagram(soresList: soresList, diagramName: imageName, zoomedView: true, selectedSore: $selectedSore)
                 
 
             }
@@ -38,13 +40,12 @@ struct EditSoreView: View {
                 SoreSizeSlider(selectedSore: $selectedSore)
                 PainScoreSlider(selectedSore: $selectedSore)
                 actionButtons
+                navigationLinks
             }
         }
 
-//        navigationLinks
             .onAppear {
                soresList = CankerSoreManager.loadActiveSores(imageName: imageName)
-                selectedSore = soresList.first
                 createNewDaySoreValues()
             }
         
@@ -65,6 +66,8 @@ struct EditSoreView: View {
             return updatedSore
         }
     }
+    
+    
     
 }
 
@@ -93,9 +96,14 @@ private extension EditSoreView {
     var actionButtons: some View {
         HStack {
             CustomButton(buttonLabel: "Finish") {
+                if !soreLogUptoDate {
+                    CankerSoreManager.overwriteSoreData(selectedSore)
+                    navigateTo = "YesNoSoreView"
+                } else {
+                    CankerSoreManager.overwriteSoreData(selectedSore)
+                    navigateTo = "SoreHistory"
+                }
                 
-                CankerSoreManager.overwriteSoreData(selectedSore)
-                navigateTo = "SoreHistory"
                 
             }
             .disabled(selectedLocationX == nil)
@@ -108,17 +116,14 @@ private extension EditSoreView {
     var navigationLinks: some View {
         Group {
             
-            //            NavigationLink(destination:MainMouthView()) { EmptyView() }
-            
-            //            NavigationLink(destination: DailyLogView(), tag: "DailyLog", selection: $navigateTo) { EmptyView() }
-            //
-            //            NavigationLink(destination: MainMouthView(isEditing: false, addNew: false), tag: "SoreHistory", selection: $navigateTo) { EmptyView() }
+                        NavigationLink(destination: MainMouthView(), tag: "SoreHistory", selection: $navigateTo) { EmptyView() }
+                        NavigationLink(destination: YesNoSoreView(), tag: "YesNoSoreView", selection: $navigateTo) { EmptyView() }
             
         }
     }
     
 }
 
-#Preview {
-    EditSoreView(imageName: "leftCheek", soreLogUptoDate: true)
-}
+//#Preview {
+//    EditSoreView(imageName: "leftCheek", soreLogUptoDate: true)
+//}

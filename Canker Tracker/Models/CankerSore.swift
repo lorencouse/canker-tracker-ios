@@ -12,7 +12,7 @@ struct CankerSore: Codable, Hashable {
     let id: UUID
     var lastUpdated: [Date]
     var numberOfDays: Int
-    let locationImage: String
+    var locationImage: String
     var soreSize: [Double]
     var painLevel: [Double]
     var xCoordinateZoomed: Double?

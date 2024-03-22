@@ -13,8 +13,10 @@ struct AddSoreView: View {
     @State private var navigateTo: String?
     @State private var selectedLocationX: Double? = nil
     @State private var selectedLocationY: Double? = nil
-    @State private var selectedSore: CankerSore? = nil
+    @State private var selectedSore: CankerSore = CankerSoreManager.initializeNewCankerSore()
     @State var soreLogUptoDate: Bool
+    @State private var tempSoreSize: Double = 3
+    @State private var tempPainLevel: Double = 3
     
     
     var body: some View {
@@ -45,7 +47,7 @@ struct AddSoreView: View {
                             .gesture(dragGesture)
                         
                         if let x = selectedLocationX, let y = selectedLocationY {
-                            DrawZoomedSoreCircle(selectedSore: selectedSore!, outlineColor: .red)
+                            DrawZoomedSoreCircle(selectedSore: selectedSore, outlineColor: .red)
                         }
                         
                     }
@@ -58,8 +60,11 @@ struct AddSoreView: View {
             
             VStack {
                 soreLocationText
-                SoreSizeSlider(selectedSore: $selectedSore)
-                PainScoreSlider(selectedSore: $selectedSore)
+                if selectedSore.soreSize != nil {
+                    SoreSizeSlider(selectedSore: $selectedSore)
+                    PainScoreSlider(selectedSore: $selectedSore)
+                }
+
                 actionButtons
                 navigationLinks
             }
@@ -82,7 +87,7 @@ private extension AddSoreView {
                 let location = CGPoint(x: value.location.x, y: value.location.y)
                     self.selectedLocationX = Double(location.x)
                     self.selectedLocationY = Double(location.y)
-                selectedSore = CankerSoreManager.initializeNewCankerSore(xCoordinateZoomed: value.location.x, yCoordinateZoomed: value.location.y, imageLocation: imageName)
+                selectedSore = CankerSoreManager.initializeNewCankerSore()
             }
     }
     
@@ -94,41 +99,6 @@ private extension AddSoreView {
         }
     }
     
-//    var soreSizeSlider: some View {
-//        HStack {
-//            Text("Size: \(Int(selectedSore?.soreSize.last ?? 3)) mm")
-//            
-//            Slider(value: Binding(
-//                get: { selectedSore?.soreSize.last ?? 3 },
-//                set: { newValue in
-//                    if selectedSore != nil {
-//                        selectedSore!.soreSize[selectedSore!.soreSize.count - 1] = newValue
-//                    }
-//                }   
-//            ), in: 0...20, step: 1)
-//        }
-//        
-//        
-//
-//    }
-//    
-//    var painScoreSlider: some View {
-//        
-//        HStack {
-//            Text("Pain: \(Int(selectedSore?.painLevel.last ?? 3))")
-//            Slider(value: Binding(
-//                get: { selectedSore?.painLevel.last ?? 3 },
-//                set: { newValue in
-//                    if selectedSore != nil {
-//                        selectedSore!.painLevel[selectedSore!.painLevel.count - 1] = newValue
-//                    }
-//                }
-//            ), in: 0...10, step: 1)
-//            
-//        }
-//        
-//
-//    }
     
     var navigationLinks: some View {
         Group {
@@ -148,7 +118,7 @@ private extension AddSoreView {
             
             CustomButton(buttonLabel: "Finish") {
                 
-                CankerSoreManager.saveNewCankerSore(newCankerSore: selectedSore)
+                CankerSoreManager.saveNewCankerSore(newCankerSore: selectedSore, imageLocation: imageName)
                 
                                 if soreLogUptoDate {
                                     navigateTo = "MainMouthView"
@@ -162,7 +132,7 @@ private extension AddSoreView {
             
             
             CustomButton(buttonLabel: "Add More") {
-                CankerSoreManager.saveNewCankerSore(newCankerSore: selectedSore)
+                CankerSoreManager.saveNewCankerSore(newCankerSore: selectedSore, imageLocation: imageName)
                 navigateTo = "SelectMouthZonesView"
                 
             }

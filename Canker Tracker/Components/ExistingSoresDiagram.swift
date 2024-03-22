@@ -13,7 +13,8 @@ struct ExistingSoresDiagram: View {
     let diagramSize: Double = Constants.diagramHeight
     let soresList: [CankerSore]
     let diagramName: String
-    @Binding var selectedSore: CankerSore?
+    let zoomedView: Bool
+    @Binding var selectedSore: CankerSore
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -35,30 +36,66 @@ struct ExistingSoresDiagram: View {
                         }
                     )
             
-            RenderSoresList(soresList: soresList, selectedSore: selectedSore)
+
+            
+            if zoomedView {
+
+                if let x = selectedSore.xCoordinateZoomed, let y = selectedSore.xCoordinateZoomed {
+                    RenderZoomedSoresList(soresList: soresList, selectedSore: selectedSore)
+                    DrawZoomedSoreCircle(selectedSore: selectedSore, outlineColor: .red)
+                }
+
+            } else {
+                RenderScaledSoresList(soresList: soresList, selectedSore: selectedSore)
+
+            }
+            
             
         }
         .frame(width: diagramSize, height: diagramSize)
     }
     
-    struct RenderSoresList: View {
-        
-        var soresList: [CankerSore]
-        var selectedSore: CankerSore?
-        
-        var body: some View {
-            ForEach(soresList, id:\.self) {
-                sore in
-                if sore.id == selectedSore?.id {
-                    DrawScaledSoreCircle(selectedSore: sore, outlineColor: .red)
 
-                } else {
-                    
-                    DrawScaledSoreCircle(selectedSore: sore, outlineColor: .white)
+}
 
-                }
+struct RenderScaledSoresList: View {
+    
+    var soresList: [CankerSore]
+    var selectedSore: CankerSore?
+    
+    var body: some View {
+        ForEach(soresList, id:\.self) {
+            sore in
+            if sore.id == selectedSore?.id {
+                DrawScaledSoreCircle(selectedSore: sore, outlineColor: .red)
+
+            } else {
                 
+                DrawScaledSoreCircle(selectedSore: sore, outlineColor: .white)
+
             }
+            
+        }
+    }
+}
+
+struct RenderZoomedSoresList: View {
+    
+    var soresList: [CankerSore]
+    var selectedSore: CankerSore?
+    
+    var body: some View {
+        ForEach(soresList, id:\.self) {
+            sore in
+            if sore.id == selectedSore?.id {
+                DrawZoomedSoreCircle(selectedSore: sore, outlineColor: .red)
+
+            } else {
+                
+                DrawZoomedSoreCircle(selectedSore: sore, outlineColor: .white)
+
+            }
+            
         }
     }
 }

@@ -128,9 +128,17 @@ struct CankerSoreManager {
 //        
 //    }
     
-    static func saveNewCankerSore(newCankerSore: CankerSore?) {
+    static func saveNewCankerSore(newCankerSore: CankerSore?, imageLocation: String) {
+        
         if let cankerSoreData = newCankerSore {
-            AppDataManager.shared.appendJsonData([cankerSoreData], fileName: Constants.soreDataFileName)
+            let scaledCoordinates = calculateScaledCoordinates(selectedLocationX: newCankerSore?.xCoordinateZoomed ?? 0, selectedLocationY: newCankerSore?.yCoordinateZoomed ?? 0, imageName: newCankerSore?.locationImage ?? "")
+            var sore = newCankerSore
+            
+            sore?.xCoordinateScaled = scaledCoordinates[0]
+            sore?.yCoordinateScaled = scaledCoordinates[1]
+            sore?.locationImage = imageLocation
+            
+            AppDataManager.shared.appendJsonData([sore], fileName: Constants.soreDataFileName)
             DailyLogManager.AddSoreIdToLatestLog(soreID: cankerSoreData.id)
         } else {
             return
@@ -139,21 +147,21 @@ struct CankerSoreManager {
         
     }
     
-    static func initializeNewCankerSore(xCoordinateZoomed: Double, yCoordinateZoomed: Double, imageLocation: String) -> CankerSore {
-        let scaledCoordinates = calculateScaledCoordinates(selectedLocationX: xCoordinateZoomed, selectedLocationY: yCoordinateZoomed, imageName: imageLocation)
+    static func initializeNewCankerSore() -> CankerSore {
+//        let scaledCoordinates = calculateScaledCoordinates(selectedLocationX: xCoordinateZoomed, selectedLocationY: yCoordinateZoomed, imageName: imageLocation)
         let id = UUID()
         
         let newCankerSore = CankerSore(
             id: id,
             lastUpdated: [Date()],
             numberOfDays: 1,
-            locationImage: imageLocation,
+            locationImage: "",
             soreSize: [3], 
             painLevel: [3],
-            xCoordinateZoomed: xCoordinateZoomed,
-            yCoordinateZoomed: yCoordinateZoomed,
-            xCoordinateScaled: scaledCoordinates[0],
-            yCoordinateScaled: scaledCoordinates[1]
+            xCoordinateZoomed: 0,
+            yCoordinateZoomed: 0,
+            xCoordinateScaled: 0,
+            yCoordinateScaled: 0
         )
         
         return newCankerSore
@@ -167,6 +175,8 @@ struct CankerSoreManager {
         return [xScaled, yScaled]
         
     }
+    
+    
 
 
 }

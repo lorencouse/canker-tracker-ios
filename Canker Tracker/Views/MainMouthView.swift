@@ -11,7 +11,7 @@ import SwiftUI
 struct MainMouthView: View {
     @State private var soresList: [CankerSore] = []
     @State private var lastLog: DailyLog? = nil
-    @State private var selectedSore: CankerSore?
+    @State private var selectedSore: CankerSore = CankerSoreManager.initializeNewCankerSore()
     @State private var soreLogUptoDate: Bool = false
     @State private var selectedZone: String = "none"
     @State private var circleOutlineColor: Color = .red
@@ -26,7 +26,7 @@ struct MainMouthView: View {
                 
                 Spacer()
                 
-                ExistingSoresDiagram(soresList: soresList,diagramName: "mouthDiagramNoLabels" , selectedSore: $selectedSore)
+                ExistingSoresDiagram(soresList: soresList,diagramName: "mouthDiagramNoLabels", zoomedView: false , selectedSore: $selectedSore)
 
             }
             
@@ -37,11 +37,11 @@ struct MainMouthView: View {
                 Form {
                     Section {
                         
-                        Text("Start Date: \(formatDate(date: selectedSore?.lastUpdated.first))")
-                        Text("Number of Days: \(selectedSore?.numberOfDays ?? 1)")
-                        Text("Pain Level: \(Int(selectedSore?.painLevel.first ?? 0))")
-                        Text("Size: \(Int(selectedSore?.soreSize.first ?? 0)) mm")
-                        NavigationButton(destination: EditSoreView(imageName: selectedSore?.locationImage ?? "", soreLogUptoDate: true), label: "Edit")
+                        Text("Start Date: \(formatDate(date: selectedSore.lastUpdated.first))")
+                        Text("Number of Days: \(selectedSore.numberOfDays ?? 1)")
+                        Text("Pain Level: \(Int(selectedSore.painLevel.first ?? 0))")
+                        Text("Size: \(Int(selectedSore.soreSize.first ?? 0)) mm")
+                        NavigationButton(destination: EditSoreView(imageName: selectedSore.locationImage ?? "", soreLogUptoDate: soreLogUptoDate, selectedSore: selectedSore), label: "Edit")
                     }
                 }
             }
